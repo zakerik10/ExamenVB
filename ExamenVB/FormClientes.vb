@@ -9,25 +9,11 @@ Public Class FormClientes
     Private currentPage As Integer = 1
     Private sizePage As Integer = 20
 
-    Private Sub ConfigureGridClientes()
-        GridClientes.Rows.Clear()
-        GridClientes.Columns.Clear()
-
-        GridClientes.Columns.Add("Cliente", "Cliente")
-        GridClientes.Columns.Add("Telefono", "Teléfono")
-        GridClientes.Columns.Add("Correo", "Correo")
-        GridClientes.Columns.Add("ID", "ID")
-        GridClientes.Columns("ID").Visible = False
-
-        Dim editButton As New DataGridViewButtonColumn()
-        editButton.Name = "Editar"
-        editButton.HeaderText = "Acciones"
-        editButton.Text = "Editar o Eliminar"
-        editButton.UseColumnTextForButtonValue = True
-        GridClientes.Columns.Add(editButton)
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadClientes()
     End Sub
 
-    Private Sub LoadClientes(page As Integer)
+    Private Sub LoadClientes()
         Dim connectionString As String = ConfigurationManager.ConnectionStrings("ExamenConnection").ConnectionString
 
         Dim inicio As Integer = (currentPage - 1) * sizePage + 1
@@ -38,16 +24,27 @@ Public Class FormClientes
             SELECT *, 
                    ROW_NUMBER() OVER (ORDER BY ID) AS RowNum
             FROM clientes
+            WHERE 1 = 1
+        "
+
+        If Not String.IsNullOrEmpty(TextBoxBuscador.Text) Then
+            query &= " AND Cliente LIKE @Nombre"
+        End If
+
+        query &= "
         )
         SELECT ID, Cliente, Telefono, Correo
         FROM CTE
-        WHERE RowNum BETWEEN @Inicio AND @Fin;
+        WHERE RowNum BETWEEN @Inicio AND @Fin
         "
 
-        ConfigureGridClientes()
+        GridClientes.Rows.Clear()
 
         Using connection As New SqlConnection(connectionString)
             Using command As New SqlCommand(query, connection)
+                If Not String.IsNullOrEmpty(TextBoxBuscador.Text) Then
+                    command.Parameters.AddWithValue("@Nombre", "%" & TextBoxBuscador.Text & "%")
+                End If
                 command.Parameters.AddWithValue("@Inicio", inicio)
                 command.Parameters.AddWithValue("@Fin", fin)
 
@@ -65,7 +62,7 @@ Public Class FormClientes
                             row("Correo").ToString()
                         )
                         cliente.ID = Convert.ToInt32(row("ID"))
-                        GridClientes.Rows.Add(cliente.Nombre, cliente.Telefono, cliente.Correo, cliente.ID)
+                        GridClientes.Rows.Add(cliente.ID, cliente.Nombre, cliente.Telefono, cliente.Correo)
                     Next
 
                 Catch ex As Exception
@@ -75,8 +72,8 @@ Public Class FormClientes
         End Using
     End Sub
 
-    Private Sub GridClientes_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles GridClientes.CellClick
-        If e.ColumnIndex = GridClientes.Columns("Editar").Index AndAlso e.RowIndex >= 0 Then
+    Private Sub GridClientes_Accion(sender As Object, e As DataGridViewCellEventArgs) Handles GridClientes.CellClick
+        If e.ColumnIndex = GridClientes.Columns("Accion").Index AndAlso e.RowIndex >= 0 Then
             Dim fila As DataGridViewRow = GridClientes.Rows(e.RowIndex)
 
             If fila.Cells("ID").Value IsNot Nothing AndAlso Not IsDBNull(fila.Cells("ID").Value) Then
@@ -91,11 +88,57 @@ Public Class FormClientes
 
                 Dim formEditar As New FormGestionCliente(cliente)
                 If formEditar.ShowDialog() = DialogResult.OK Then
-                    LoadClientes(currentPage)
+                    LoadClientes()
                 End If
             Else
                 MessageBox.Show("El ID del cliente no está disponible.")
             End If
+        End If
+    End Sub
+
+    Private Sub GridClientes_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles GridClientes.CellContentClick
+        If e.ColumnIndex = GridClientes.Columns("Seleccionar").Index AndAlso e.RowIndex >= 0 Then
+            Dim checkBoxCell As DataGridViewCheckBoxCell = CType(GridClientes.Rows(e.RowIndex).Cells("Seleccionar"), DataGridViewCheckBoxCell)
+            checkBoxCell.Value = Not CBool(checkBoxCell.Value)
+
+            Dim cantidadSeleccionadas As Integer = 0
+            For Each row As DataGridViewRow In GridClientes.Rows
+                If CBool(row.Cells("Seleccionar").Value) Then
+                    cantidadSeleccionadas += 1
+                End If
+            Next
+
+            If cantidadSeleccionadas > 0 Then
+                ButtonEliminarSelec.Show()
+            Else
+                ButtonEliminarSelec.Hide()
+            End If
+        End If
+    End Sub
+
+    Private Sub ButtonEliminarSelec_Click(sender As Object, e As EventArgs) Handles ButtonEliminarSelec.Click
+        Dim resultado As DialogResult = MessageBox.Show("¿Estás seguro de que deseas eliminar los clientes seleccionados?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+        If resultado = DialogResult.Yes Then
+
+            For Each fila As DataGridViewRow In GridClientes.Rows
+                Dim checkBoxCell As DataGridViewCheckBoxCell = CType(fila.Cells("Seleccionar"), DataGridViewCheckBoxCell)
+
+                If checkBoxCell IsNot Nothing AndAlso CBool(checkBoxCell.Value) Then
+                    Dim id As Integer = Convert.ToInt32(fila.Cells("ID").Value)
+                    Dim nombre As String = If(fila.Cells("Cliente").Value IsNot Nothing, fila.Cells("Cliente").Value.ToString(), String.Empty)
+                    Dim telefono As String = If(fila.Cells("Telefono").Value IsNot Nothing, fila.Cells("Telefono").Value.ToString(), String.Empty)
+                    Dim correo As String = If(fila.Cells("Correo").Value IsNot Nothing, fila.Cells("Correo").Value.ToString(), String.Empty)
+
+                    Dim cliente As New Cliente(nombre, telefono, correo) With {
+                        .ID = id
+                    }
+
+                    clienteService.Eliminar(cliente)
+                End If
+            Next
+            ButtonEliminarSelec.Hide()
+            LoadClientes()
         End If
     End Sub
 
@@ -108,35 +151,36 @@ Public Class FormClientes
         Return Nothing
     End Function
 
-    Private Sub LoadClients(sender As Object, e As EventArgs) Handles ButtonLoadClientes.Click
-        LoadClientes(currentPage)
+    Private Sub LoadClients(sender As Object, e As EventArgs) Handles ButtonBuscar.Click
+        LoadClientes()
     End Sub
 
     Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
         currentPage += 1
-        LoadClientes(currentPage)
+        LoadClientes()
     End Sub
 
     Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
         If currentPage > 1 Then
             currentPage -= 1
-            LoadClientes(currentPage)
+            LoadClientes()
         End If
-    End Sub
-
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Cargar la primera página de clientes al iniciar el formulario
-        LoadClientes(currentPage)
     End Sub
 
     Private Sub GestionarCliente(sender As Object, e As EventArgs) Handles BotonCrearCliente.Click
         Dim formGestion As New FormGestionCliente(Nothing)
         formGestion.ShowDialog()
-        LoadClientes(currentPage)
+        LoadClientes()
     End Sub
 
     Private Sub ButtonMenu_Click(sender As Object, e As EventArgs) Handles ButtonMenu.Click
         Main.Show()
         Me.Close()
     End Sub
+
+    Private Sub ButtonLimpiar_Click(sender As Object, e As EventArgs) Handles ButtonLimpiar.Click
+        TextBoxBuscador.Text = Nothing
+        LoadClientes()
+    End Sub
+
 End Class

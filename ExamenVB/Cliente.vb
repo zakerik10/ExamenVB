@@ -32,7 +32,7 @@ Public Class ClienteService
 
                 Try
                     connection.Open()
-                    command.ExecuteNonQuery()  ' Ejecutar la consulta
+                    command.ExecuteNonQuery()
                     MessageBox.Show("Cliente guardado exitosamente!")
                 Catch ex As Exception
                     MessageBox.Show("Error al cargar los datos: " & ex.Message)
@@ -60,7 +60,7 @@ Public Class ClienteService
 
                 Try
                     connection.Open()
-                    command.ExecuteNonQuery()  ' Ejecutar la consulta
+                    command.ExecuteNonQuery()
                     MessageBox.Show("Cliente guardado exitosamente!")
                 Catch ex As Exception
                     MessageBox.Show("Error al cargar los datos: " & ex.Message)
@@ -79,8 +79,8 @@ Public Class ClienteService
 
                 Try
                     connection.Open()
-                    command.ExecuteNonQuery()  ' Ejecutar la consulta
-                    MessageBox.Show("Cliente eliminado exitosamente!")
+                    command.ExecuteNonQuery()
+                    'MessageBox.Show("Cliente eliminado exitosamente!")
                 Catch ex As Exception
                     MessageBox.Show("Error al cargar los datos: " & ex.Message)
                 End Try
