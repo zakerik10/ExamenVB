@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FormEditarCliente
+Partial Class FormGestionCliente
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -22,7 +22,7 @@ Partial Class FormEditarCliente
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.BotonEditarCliente = New System.Windows.Forms.Button()
+        Me.BotonConfirmar = New System.Windows.Forms.Button()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.TextBoxCorreo = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -33,14 +33,14 @@ Partial Class FormEditarCliente
         Me.BotonEliminarCliente = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
-        'BotonEditarCliente
+        'BotonConfirmar
         '
-        Me.BotonEditarCliente.Location = New System.Drawing.Point(260, 178)
-        Me.BotonEditarCliente.Name = "BotonEditarCliente"
-        Me.BotonEditarCliente.Size = New System.Drawing.Size(75, 23)
-        Me.BotonEditarCliente.TabIndex = 19
-        Me.BotonEditarCliente.Text = "Editar"
-        Me.BotonEditarCliente.UseVisualStyleBackColor = True
+        Me.BotonConfirmar.Location = New System.Drawing.Point(260, 178)
+        Me.BotonConfirmar.Name = "BotonConfirmar"
+        Me.BotonConfirmar.Size = New System.Drawing.Size(75, 23)
+        Me.BotonConfirmar.TabIndex = 19
+        Me.BotonConfirmar.Text = "Editar"
+        Me.BotonConfirmar.UseVisualStyleBackColor = True
         '
         'Label4
         '
@@ -114,7 +114,7 @@ Partial Class FormEditarCliente
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(416, 330)
         Me.Controls.Add(Me.BotonEliminarCliente)
-        Me.Controls.Add(Me.BotonEditarCliente)
+        Me.Controls.Add(Me.BotonConfirmar)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.TextBoxCorreo)
         Me.Controls.Add(Me.Label3)
@@ -129,7 +129,7 @@ Partial Class FormEditarCliente
 
     End Sub
 
-    Friend WithEvents BotonEditarCliente As Button
+    Friend WithEvents BotonConfirmar As Button
     Friend WithEvents Label4 As Label
     Friend WithEvents TextBoxCorreo As TextBox
     Friend WithEvents Label3 As Label

@@ -3,12 +3,13 @@ C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\bin\Debug\ExamenVB.exe
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\bin\Debug\ExamenVB.pdb
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\bin\Debug\ExamenVB.xml
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.vbproj.AssemblyReference.cache
-C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.Form1.resources
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.Resources.resources
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.vbproj.GenerateResource.cache
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.vbproj.CoreCompileInputs.cache
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.exe
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.xml
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.pdb
-C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormEditarCliente.resources
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormEditarProducto.resources
+C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormClientes.resources
+C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.Main.resources
+C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormGestionCliente.resources

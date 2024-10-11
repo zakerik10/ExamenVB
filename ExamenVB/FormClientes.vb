@@ -2,7 +2,7 @@
 Imports System.Configuration
 Imports System.Drawing.Printing
 
-Public Class Form1
+Public Class FormClientes
 
     Dim clienteService As New ClienteService()
 
@@ -97,11 +97,11 @@ Public Class Form1
 
                 ' Crear un nuevo objeto Cliente con los datos
                 Dim cliente As New Cliente(nombre, telefono, correo) With {
-                .ID = id
-            }
+                    .ID = id
+                }
 
                 ' Aquí puedes abrir un nuevo formulario o realizar otras acciones con el cliente
-                Dim formEditar As New FormEditarCliente(cliente)
+                Dim formEditar As New FormGestionCliente(cliente)
                 If formEditar.ShowDialog() = DialogResult.OK Then
                     ' Si el usuario guarda los cambios, recarga la lista
                     LoadClientes(currentPage)
@@ -146,14 +146,14 @@ Public Class Form1
         LoadClientes(currentPage)
     End Sub
 
-    Private Sub AltaCliente(sender As Object, e As EventArgs) Handles BotonAltaCliente.Click
-        Dim nombre As String = TextBoxNombre.Text
-        Dim telefono As String = TextBoxTelefono.Text
-        Dim correo As String = TextBoxCorreo.Text
-
-        Dim NuevoCliente As New Cliente(nombre, telefono, correo)
-        clienteService.Guardar(NuevoCliente)
+    Private Sub GestionarCliente(sender As Object, e As EventArgs) Handles BotonCrearCliente.Click
+        Dim formGestion As New FormGestionCliente(Nothing)
+        formGestion.ShowDialog()
         LoadClientes(currentPage)
     End Sub
 
+    Private Sub ButtonMenu_Click(sender As Object, e As EventArgs) Handles ButtonMenu.Click
+        Main.Show()
+        Me.Close()
+    End Sub
 End Class
