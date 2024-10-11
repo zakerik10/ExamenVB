@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormClientes
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class FormClientes
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.ButtonBuscar = New System.Windows.Forms.Button()
         Me.GridClientes = New System.Windows.Forms.DataGridView()
@@ -44,7 +44,7 @@ Partial Class FormClientes
         '
         'ButtonBuscar
         '
-        Me.ButtonBuscar.Location = New System.Drawing.Point(272, 67)
+        Me.ButtonBuscar.Location = New System.Drawing.Point(257, 67)
         Me.ButtonBuscar.Name = "ButtonBuscar"
         Me.ButtonBuscar.Size = New System.Drawing.Size(75, 23)
         Me.ButtonBuscar.TabIndex = 0
@@ -56,7 +56,7 @@ Partial Class FormClientes
         Me.GridClientes.AllowUserToAddRows = False
         Me.GridClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridClientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ID, Me.Cliente, Me.Telefono, Me.Correo, Me.Accion, Me.Seleccionar})
-        Me.GridClientes.Location = New System.Drawing.Point(44, 95)
+        Me.GridClientes.Location = New System.Drawing.Point(29, 95)
         Me.GridClientes.Name = "GridClientes"
         Me.GridClientes.Size = New System.Drawing.Size(516, 376)
         Me.GridClientes.TabIndex = 1
@@ -102,7 +102,7 @@ Partial Class FormClientes
         '
         'ButtonPrevious
         '
-        Me.ButtonPrevious.Location = New System.Drawing.Point(404, 477)
+        Me.ButtonPrevious.Location = New System.Drawing.Point(389, 477)
         Me.ButtonPrevious.Name = "ButtonPrevious"
         Me.ButtonPrevious.Size = New System.Drawing.Size(75, 23)
         Me.ButtonPrevious.TabIndex = 2
@@ -111,7 +111,7 @@ Partial Class FormClientes
         '
         'ButtonNext
         '
-        Me.ButtonNext.Location = New System.Drawing.Point(485, 477)
+        Me.ButtonNext.Location = New System.Drawing.Point(470, 477)
         Me.ButtonNext.Name = "ButtonNext"
         Me.ButtonNext.Size = New System.Drawing.Size(75, 23)
         Me.ButtonNext.TabIndex = 3
@@ -129,7 +129,7 @@ Partial Class FormClientes
         '
         'BotonCrearCliente
         '
-        Me.BotonCrearCliente.Location = New System.Drawing.Point(44, 477)
+        Me.BotonCrearCliente.Location = New System.Drawing.Point(29, 477)
         Me.BotonCrearCliente.Name = "BotonCrearCliente"
         Me.BotonCrearCliente.Size = New System.Drawing.Size(95, 23)
         Me.BotonCrearCliente.TabIndex = 11
@@ -138,7 +138,7 @@ Partial Class FormClientes
         '
         'ButtonMenu
         '
-        Me.ButtonMenu.Location = New System.Drawing.Point(475, 24)
+        Me.ButtonMenu.Location = New System.Drawing.Point(460, 24)
         Me.ButtonMenu.Name = "ButtonMenu"
         Me.ButtonMenu.Size = New System.Drawing.Size(85, 23)
         Me.ButtonMenu.TabIndex = 12
@@ -147,7 +147,7 @@ Partial Class FormClientes
         '
         'TextBoxBuscador
         '
-        Me.TextBoxBuscador.Location = New System.Drawing.Point(44, 69)
+        Me.TextBoxBuscador.Location = New System.Drawing.Point(29, 69)
         Me.TextBoxBuscador.Name = "TextBoxBuscador"
         Me.TextBoxBuscador.Size = New System.Drawing.Size(222, 20)
         Me.TextBoxBuscador.TabIndex = 13
@@ -155,7 +155,7 @@ Partial Class FormClientes
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(41, 53)
+        Me.Label2.Location = New System.Drawing.Point(26, 53)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(40, 13)
         Me.Label2.TabIndex = 14
@@ -163,7 +163,7 @@ Partial Class FormClientes
         '
         'ButtonLimpiar
         '
-        Me.ButtonLimpiar.Location = New System.Drawing.Point(353, 67)
+        Me.ButtonLimpiar.Location = New System.Drawing.Point(338, 67)
         Me.ButtonLimpiar.Name = "ButtonLimpiar"
         Me.ButtonLimpiar.Size = New System.Drawing.Size(75, 23)
         Me.ButtonLimpiar.TabIndex = 15
@@ -172,7 +172,7 @@ Partial Class FormClientes
         '
         'ButtonEliminarSelec
         '
-        Me.ButtonEliminarSelec.Location = New System.Drawing.Point(458, 67)
+        Me.ButtonEliminarSelec.Location = New System.Drawing.Point(443, 67)
         Me.ButtonEliminarSelec.Name = "ButtonEliminarSelec"
         Me.ButtonEliminarSelec.Size = New System.Drawing.Size(102, 23)
         Me.ButtonEliminarSelec.TabIndex = 16
@@ -184,7 +184,7 @@ Partial Class FormClientes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(602, 538)
+        Me.ClientSize = New System.Drawing.Size(569, 538)
         Me.Controls.Add(Me.ButtonEliminarSelec)
         Me.Controls.Add(Me.ButtonLimpiar)
         Me.Controls.Add(Me.Label2)
