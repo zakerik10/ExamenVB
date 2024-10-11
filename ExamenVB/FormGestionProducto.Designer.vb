@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FormEditarProducto
+Partial Class FormGestionProducto
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -23,7 +23,7 @@ Partial Class FormEditarProducto
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.BotonEliminarCliente = New System.Windows.Forms.Button()
-        Me.BotonEditarCliente = New System.Windows.Forms.Button()
+        Me.BotonConfirmar = New System.Windows.Forms.Button()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.TextBoxCategoria = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -42,14 +42,14 @@ Partial Class FormEditarProducto
         Me.BotonEliminarCliente.Text = "Eliminar"
         Me.BotonEliminarCliente.UseVisualStyleBackColor = True
         '
-        'BotonEditarCliente
+        'BotonConfirmar
         '
-        Me.BotonEditarCliente.Location = New System.Drawing.Point(251, 186)
-        Me.BotonEditarCliente.Name = "BotonEditarCliente"
-        Me.BotonEditarCliente.Size = New System.Drawing.Size(75, 23)
-        Me.BotonEditarCliente.TabIndex = 28
-        Me.BotonEditarCliente.Text = "Editar"
-        Me.BotonEditarCliente.UseVisualStyleBackColor = True
+        Me.BotonConfirmar.Location = New System.Drawing.Point(251, 186)
+        Me.BotonConfirmar.Name = "BotonConfirmar"
+        Me.BotonConfirmar.Size = New System.Drawing.Size(75, 23)
+        Me.BotonConfirmar.TabIndex = 28
+        Me.BotonConfirmar.Text = "Editar"
+        Me.BotonConfirmar.UseVisualStyleBackColor = True
         '
         'Label4
         '
@@ -108,13 +108,13 @@ Partial Class FormEditarProducto
         Me.LabelTitulo.TabIndex = 21
         Me.LabelTitulo.Text = "Editar Producto"
         '
-        'FormEditarProducto
+        'FormGestionProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(398, 294)
         Me.Controls.Add(Me.BotonEliminarCliente)
-        Me.Controls.Add(Me.BotonEditarCliente)
+        Me.Controls.Add(Me.BotonConfirmar)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.TextBoxCategoria)
         Me.Controls.Add(Me.Label3)
@@ -122,7 +122,7 @@ Partial Class FormEditarProducto
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBoxNombre)
         Me.Controls.Add(Me.LabelTitulo)
-        Me.Name = "FormEditarProducto"
+        Me.Name = "FormGestionProducto"
         Me.Text = "FormEditarProducto"
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -130,7 +130,7 @@ Partial Class FormEditarProducto
     End Sub
 
     Friend WithEvents BotonEliminarCliente As Button
-    Friend WithEvents BotonEditarCliente As Button
+    Friend WithEvents BotonConfirmar As Button
     Friend WithEvents Label4 As Label
     Friend WithEvents TextBoxCategoria As TextBox
     Friend WithEvents Label3 As Label

@@ -89,10 +89,16 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormEditarProducto.Designer.vb">
-      <DependentUpon>FormEditarProducto.vb</DependentUpon>
+    <Compile Include="FormGestionProducto.Designer.vb">
+      <DependentUpon>FormGestionProducto.vb</DependentUpon>
     </Compile>
-    <Compile Include="FormEditarProducto.vb">
+    <Compile Include="FormGestionProducto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProductos.Designer.vb">
+      <DependentUpon>FormProductos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormProductos.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main.Designer.vb">
@@ -140,8 +146,11 @@
     <EmbeddedResource Include="FormGestionCliente.resx">
       <DependentUpon>FormGestionCliente.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormEditarProducto.resx">
-      <DependentUpon>FormEditarProducto.vb</DependentUpon>
+    <EmbeddedResource Include="FormGestionProducto.resx">
+      <DependentUpon>FormGestionProducto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormProductos.resx">
+      <DependentUpon>FormProductos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.vb</DependentUpon>

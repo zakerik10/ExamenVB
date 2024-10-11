@@ -54,8 +54,8 @@ Public Class ProductoService
         Using connection As New SqlConnection(connectionString)
             Using command As New SqlCommand(query, connection)
                 command.Parameters.AddWithValue("@Nombre", producto.Nombre)
-                command.Parameters.AddWithValue("@Telefono", producto.Precio)
-                command.Parameters.AddWithValue("@Correo", producto.Categoria)
+                command.Parameters.AddWithValue("@Precio", producto.Precio)
+                command.Parameters.AddWithValue("@Categoria", producto.Categoria)
                 command.Parameters.AddWithValue("@ID", producto.ID)
 
                 Try

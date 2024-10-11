@@ -87,7 +87,7 @@ Partial Class FormClientes
         '
         Me.BotonCrearCliente.Location = New System.Drawing.Point(125, 444)
         Me.BotonCrearCliente.Name = "BotonCrearCliente"
-        Me.BotonCrearCliente.Size = New System.Drawing.Size(84, 23)
+        Me.BotonCrearCliente.Size = New System.Drawing.Size(95, 23)
         Me.BotonCrearCliente.TabIndex = 11
         Me.BotonCrearCliente.Text = "Cliente Nuevo"
         Me.BotonCrearCliente.UseVisualStyleBackColor = True

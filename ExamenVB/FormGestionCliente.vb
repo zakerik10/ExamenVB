@@ -25,16 +25,12 @@ Public Class FormGestionCliente
             Accionar = AddressOf clienteService.Editar
             TextBox = "¿Estás seguro de que deseas editar este cliente?"
         End If
-
-
     End Sub
 
     Private Sub BotonEliminarCliente_Click(sender As Object, e As EventArgs) Handles BotonEliminarCliente.Click
         Dim resultado As DialogResult = MessageBox.Show("¿Estás seguro de que deseas eliminar este cliente?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
-        ' Verificar la respuesta del usuario
         If resultado = DialogResult.Yes Then
-            ' El usuario hizo clic en Sí, realizar la acción de eliminar
             clienteService.Eliminar(cliente)
             Me.DialogResult = DialogResult.OK
             Me.Close()
@@ -44,9 +40,7 @@ Public Class FormGestionCliente
     Private Sub BotonEditarCliente_Click(sender As Object, e As EventArgs) Handles BotonConfirmar.Click
         Dim resultado As DialogResult = MessageBox.Show(TextBox, "Confirmar edición", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
-        ' Verificar la respuesta del usuario
         If resultado = DialogResult.Yes Then
-            ' El usuario hizo clic en Sí, realizar la acción de eliminar
             Dim nombre As String = TextBoxNombre.Text
             Dim telefono As String = TextBoxTelefono.Text
             Dim correo As String = TextBoxCorreo.Text

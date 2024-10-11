@@ -9,7 +9,8 @@ C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.vbproj.C
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.exe
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.xml
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.pdb
-C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormEditarProducto.resources
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormClientes.resources
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.Main.resources
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormGestionCliente.resources
+C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormProductos.resources
+C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormGestionProducto.resources

@@ -25,6 +25,7 @@ Partial Class Main
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ButtonClientes = New System.Windows.Forms.Button()
         Me.ButtonProductos = New System.Windows.Forms.Button()
+        Me.ButtonSalir = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -55,11 +56,21 @@ Partial Class Main
         Me.ButtonProductos.Text = "Productos"
         Me.ButtonProductos.UseVisualStyleBackColor = True
         '
+        'ButtonSalir
+        '
+        Me.ButtonSalir.Location = New System.Drawing.Point(129, 334)
+        Me.ButtonSalir.Name = "ButtonSalir"
+        Me.ButtonSalir.Size = New System.Drawing.Size(130, 42)
+        Me.ButtonSalir.TabIndex = 3
+        Me.ButtonSalir.Text = "Salir"
+        Me.ButtonSalir.UseVisualStyleBackColor = True
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(384, 432)
+        Me.Controls.Add(Me.ButtonSalir)
         Me.Controls.Add(Me.ButtonProductos)
         Me.Controls.Add(Me.ButtonClientes)
         Me.Controls.Add(Me.Label1)
@@ -73,4 +84,5 @@ Partial Class Main
     Friend WithEvents Label1 As Label
     Friend WithEvents ButtonClientes As Button
     Friend WithEvents ButtonProductos As Button
+    Friend WithEvents ButtonSalir As Button
 End Class
