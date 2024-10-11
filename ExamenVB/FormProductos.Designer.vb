@@ -29,7 +29,7 @@ Partial Class FormProductos
         Me.ButtonPrevious = New System.Windows.Forms.Button()
         Me.GridClientes = New System.Windows.Forms.DataGridView()
         Me.Accion = New System.Windows.Forms.DataGridViewButtonColumn()
-        Me.ButtonLoadClients = New System.Windows.Forms.Button()
+        Me.ButtonLoadProductos = New System.Windows.Forms.Button()
         CType(Me.GridClientes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -92,14 +92,14 @@ Partial Class FormProductos
         Me.Accion.HeaderText = "Acción"
         Me.Accion.Name = "Accion"
         '
-        'ButtonLoadClients
+        'ButtonLoadProductos
         '
-        Me.ButtonLoadClients.Location = New System.Drawing.Point(44, 444)
-        Me.ButtonLoadClients.Name = "ButtonLoadClients"
-        Me.ButtonLoadClients.Size = New System.Drawing.Size(75, 23)
-        Me.ButtonLoadClients.TabIndex = 13
-        Me.ButtonLoadClients.Text = "Cargar Lista"
-        Me.ButtonLoadClients.UseVisualStyleBackColor = True
+        Me.ButtonLoadProductos.Location = New System.Drawing.Point(44, 444)
+        Me.ButtonLoadProductos.Name = "ButtonLoadProductos"
+        Me.ButtonLoadProductos.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonLoadProductos.TabIndex = 13
+        Me.ButtonLoadProductos.Text = "Cargar Lista"
+        Me.ButtonLoadProductos.UseVisualStyleBackColor = True
         '
         'FormProductos
         '
@@ -112,7 +112,7 @@ Partial Class FormProductos
         Me.Controls.Add(Me.ButtonNext)
         Me.Controls.Add(Me.ButtonPrevious)
         Me.Controls.Add(Me.GridClientes)
-        Me.Controls.Add(Me.ButtonLoadClients)
+        Me.Controls.Add(Me.ButtonLoadProductos)
         Me.Name = "FormProductos"
         Me.Text = "FormProductos"
         CType(Me.GridClientes, System.ComponentModel.ISupportInitialize).EndInit()
@@ -128,5 +128,5 @@ Partial Class FormProductos
     Friend WithEvents ButtonPrevious As Button
     Friend WithEvents GridClientes As DataGridView
     Friend WithEvents Accion As DataGridViewButtonColumn
-    Friend WithEvents ButtonLoadClients As Button
+    Friend WithEvents ButtonLoadProductos As Button
 End Class

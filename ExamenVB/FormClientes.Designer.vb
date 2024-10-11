@@ -22,7 +22,7 @@ Partial Class FormClientes
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.ButtonLoadClients = New System.Windows.Forms.Button()
+        Me.ButtonLoadClientes = New System.Windows.Forms.Button()
         Me.GridClientes = New System.Windows.Forms.DataGridView()
         Me.Accion = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.ButtonPrevious = New System.Windows.Forms.Button()
@@ -33,14 +33,14 @@ Partial Class FormClientes
         CType(Me.GridClientes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'ButtonLoadClients
+        'ButtonLoadClientes
         '
-        Me.ButtonLoadClients.Location = New System.Drawing.Point(44, 444)
-        Me.ButtonLoadClients.Name = "ButtonLoadClients"
-        Me.ButtonLoadClients.Size = New System.Drawing.Size(75, 23)
-        Me.ButtonLoadClients.TabIndex = 0
-        Me.ButtonLoadClients.Text = "Cargar Lista"
-        Me.ButtonLoadClients.UseVisualStyleBackColor = True
+        Me.ButtonLoadClientes.Location = New System.Drawing.Point(44, 444)
+        Me.ButtonLoadClientes.Name = "ButtonLoadClientes"
+        Me.ButtonLoadClientes.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonLoadClientes.TabIndex = 0
+        Me.ButtonLoadClientes.Text = "Cargar Lista"
+        Me.ButtonLoadClientes.UseVisualStyleBackColor = True
         '
         'GridClientes
         '
@@ -112,7 +112,7 @@ Partial Class FormClientes
         Me.Controls.Add(Me.ButtonNext)
         Me.Controls.Add(Me.ButtonPrevious)
         Me.Controls.Add(Me.GridClientes)
-        Me.Controls.Add(Me.ButtonLoadClients)
+        Me.Controls.Add(Me.ButtonLoadClientes)
         Me.Name = "FormClientes"
         Me.Text = "Form1"
         CType(Me.GridClientes, System.ComponentModel.ISupportInitialize).EndInit()
@@ -121,7 +121,7 @@ Partial Class FormClientes
 
     End Sub
 
-    Friend WithEvents ButtonLoadClients As Button
+    Friend WithEvents ButtonLoadClientes As Button
     Friend WithEvents GridClientes As DataGridView
     Friend WithEvents ButtonPrevious As Button
     Friend WithEvents ButtonNext As Button

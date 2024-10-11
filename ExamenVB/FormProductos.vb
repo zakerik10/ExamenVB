@@ -8,7 +8,7 @@ Public Class FormProductos
     Private sizePage As Integer = 20
 
     Private Sub FormLoad(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadClientes(currentPage)
+        LoadProductos(currentPage)
     End Sub
 
     Private Sub ConfigureGridClientes()
@@ -24,14 +24,14 @@ Public Class FormProductos
 
         ' Agregar una columna para el botón de "Editar"
         Dim editButton As New DataGridViewButtonColumn()
-        editButton.Name = "Editar"
+        editButton.Name = "Editar O Eliminar"
         editButton.HeaderText = "Acciones"
-        editButton.Text = "Editar"
+        editButton.Text = "Editar O Eliminar"
         editButton.UseColumnTextForButtonValue = True
         GridClientes.Columns.Add(editButton)
     End Sub
 
-    Private Sub LoadClientes(page As Integer)
+    Private Sub LoadProductos(page As Integer)
         Dim connectionString As String = ConfigurationManager.ConnectionStrings("ExamenConnection").ConnectionString
 
         ' Cálculo del offset
@@ -101,7 +101,7 @@ Public Class FormProductos
 
                 Dim formEditar As New FormGestionProducto(producto)
                 If formEditar.ShowDialog() = DialogResult.OK Then
-                    LoadClientes(currentPage)
+                    LoadProductos(currentPage)
                 End If
             Else
                 MessageBox.Show("El ID del producto no está disponible.")
@@ -118,15 +118,20 @@ Public Class FormProductos
         Return Nothing
     End Function
 
+
+    Private Sub LoadClients(sender As Object, e As EventArgs) Handles ButtonLoadProductos.Click
+        LoadProductos(currentPage)
+    End Sub
+
     Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
         currentPage += 1
-        LoadClientes(currentPage)
+        LoadProductos(currentPage)
     End Sub
 
     Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
         If currentPage > 1 Then
             currentPage -= 1
-            LoadClientes(currentPage)
+            LoadProductos(currentPage)
         End If
     End Sub
 
@@ -138,6 +143,6 @@ Public Class FormProductos
     Private Sub GestionarCliente(sender As Object, e As EventArgs) Handles BotonCrearProducto.Click
         Dim formGestion As New FormGestionProducto(Nothing)
         formGestion.ShowDialog()
-        LoadClientes(currentPage)
+        LoadProductos(currentPage)
     End Sub
 End Class
