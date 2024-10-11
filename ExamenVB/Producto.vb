@@ -4,7 +4,7 @@ Imports System.Data.SqlClient
 Public Class Producto
     Public Property ID As Integer
     Public Property Nombre As String
-    Public Property Precio As String
+    Public Property Precio As Integer
     Public Property Categoria As String
 
     Public Sub New(nombre As String, precio As String, categoria As String)
@@ -33,7 +33,7 @@ Public Class ProductoService
                 Try
                     connection.Open()
                     command.ExecuteNonQuery()  ' Ejecutar la consulta
-                    MessageBox.Show("Producto guardado exitosamente!")
+                    'MessageBox.Show("Producto guardado exitosamente!")
                 Catch ex As Exception
                     MessageBox.Show("Error al cargar los datos: " & ex.Message)
                 End Try
@@ -61,7 +61,7 @@ Public Class ProductoService
                 Try
                     connection.Open()
                     command.ExecuteNonQuery()  ' Ejecutar la consulta
-                    MessageBox.Show("Producto guardado exitosamente!")
+                    'MessageBox.Show("Producto guardado exitosamente!")
                 Catch ex As Exception
                     MessageBox.Show("Error al cargar los datos: " & ex.Message)
                 End Try
@@ -80,7 +80,7 @@ Public Class ProductoService
                 Try
                     connection.Open()
                     command.ExecuteNonQuery()  ' Ejecutar la consulta
-                    MessageBox.Show("Producto eliminado exitosamente!")
+                    'MessageBox.Show("Producto eliminado exitosamente!")
                 Catch ex As Exception
                     MessageBox.Show("Error al cargar los datos: " & ex.Message)
                 End Try

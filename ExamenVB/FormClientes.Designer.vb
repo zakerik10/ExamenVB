@@ -53,6 +53,7 @@ Partial Class FormClientes
         '
         'GridClientes
         '
+        Me.GridClientes.AllowUserToAddRows = False
         Me.GridClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridClientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ID, Me.Cliente, Me.Telefono, Me.Correo, Me.Accion, Me.Seleccionar})
         Me.GridClientes.Location = New System.Drawing.Point(44, 95)
@@ -101,7 +102,7 @@ Partial Class FormClientes
         '
         'ButtonPrevious
         '
-        Me.ButtonPrevious.Location = New System.Drawing.Point(407, 477)
+        Me.ButtonPrevious.Location = New System.Drawing.Point(404, 477)
         Me.ButtonPrevious.Name = "ButtonPrevious"
         Me.ButtonPrevious.Size = New System.Drawing.Size(75, 23)
         Me.ButtonPrevious.TabIndex = 2
@@ -110,7 +111,7 @@ Partial Class FormClientes
         '
         'ButtonNext
         '
-        Me.ButtonNext.Location = New System.Drawing.Point(488, 477)
+        Me.ButtonNext.Location = New System.Drawing.Point(485, 477)
         Me.ButtonNext.Name = "ButtonNext"
         Me.ButtonNext.Size = New System.Drawing.Size(75, 23)
         Me.ButtonNext.TabIndex = 3
@@ -137,7 +138,7 @@ Partial Class FormClientes
         '
         'ButtonMenu
         '
-        Me.ButtonMenu.Location = New System.Drawing.Point(478, 24)
+        Me.ButtonMenu.Location = New System.Drawing.Point(475, 24)
         Me.ButtonMenu.Name = "ButtonMenu"
         Me.ButtonMenu.Size = New System.Drawing.Size(85, 23)
         Me.ButtonMenu.TabIndex = 12
@@ -171,7 +172,7 @@ Partial Class FormClientes
         '
         'ButtonEliminarSelec
         '
-        Me.ButtonEliminarSelec.Location = New System.Drawing.Point(458, 66)
+        Me.ButtonEliminarSelec.Location = New System.Drawing.Point(458, 67)
         Me.ButtonEliminarSelec.Name = "ButtonEliminarSelec"
         Me.ButtonEliminarSelec.Size = New System.Drawing.Size(102, 23)
         Me.ButtonEliminarSelec.TabIndex = 16

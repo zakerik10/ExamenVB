@@ -42,21 +42,25 @@ Public Class FormGestionProducto
 
         If resultado = DialogResult.Yes Then
 
-            Dim nombre As String = TextBoxNombre.Text
-            Dim precio As String = TextBoxPrecio.Text
-            Dim categoria As String = TextBoxCategoria.Text
+            Try
+                Dim nombre As String = TextBoxNombre.Text
+                Dim precio As Integer = TextBoxPrecio.Text
+                Dim categoria As String = TextBoxCategoria.Text
 
-            If (producto Is Nothing) Then
-                producto = New Producto(nombre, precio, categoria)
-            Else
-                producto.Nombre = nombre
-                producto.Precio = precio
-                producto.Categoria = categoria
-            End If
+                If (producto Is Nothing) Then
+                    producto = New Producto(nombre, precio, categoria)
+                Else
+                    producto.Nombre = nombre
+                    producto.Precio = precio
+                    producto.Categoria = categoria
+                End If
 
-            Accionar(producto)
-            Me.DialogResult = DialogResult.OK
-            Me.Close()
+                Accionar(producto)
+                Me.DialogResult = DialogResult.OK
+                Me.Close()
+            Catch
+                MessageBox.Show("Revise los tipos de datos")
+            End Try
         End If
     End Sub
 End Class
