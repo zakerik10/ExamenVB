@@ -10,6 +10,7 @@ Public Class FormProductos
 
     Private esVenta As Boolean
     Private cliente As Cliente
+    Dim venta As New Venta()
 
     Private listaCarrito As List(Of VentaItems)
 
@@ -28,6 +29,8 @@ Public Class FormProductos
             Cantidad.Visible = True
             Cantidad.ReadOnly = False
             AgregarCarrito.Visible = True
+
+            venta.IDCliente = cliente.ID
         Else
             esVenta = False
             LabelTitulo.Text = "Productos"
@@ -214,15 +217,21 @@ Public Class FormProductos
                 Dim precioProducto As Integer = If(fila.Cells("Precio").Value IsNot Nothing, CInt(fila.Cells("Precio").Value), 0)
 
                 If cantidadProducto > 0 Then
-                    Dim ventaItems As New VentaItems() With {
+                    Dim itemEnCarrito As VentaItems = listaCarrito.Find(Function(item) item.IDProducto = idProducto)
+                    If itemEnCarrito Is Nothing Then
+                        Dim ventaItems As New VentaItems() With {
                         .IDProducto = idProducto,
                         .PrecioUnitario = precioProducto,
                         .Cantidad = cantidadProducto
                     }
 
-                    listaCarrito.Add(ventaItems)
+                        listaCarrito.Add(ventaItems)
+                    Else
+                        itemEnCarrito.Cantidad += cantidadProducto
+                    End If
                     MessageBox.Show("Se agregaron al carrito" & vbCrLf & "Producto: " & nombreProducto & vbCrLf & "Cantidad: " & cantidadProducto)
                     fila.Cells("Cantidad").Value = Nothing
+
                 Else
                     MessageBox.Show("Elija una cantida válida")
                 End If
@@ -358,5 +367,13 @@ Public Class FormProductos
         TextBoxMaxPrecio.Text() = Nothing
         TextBoxMinPrecio.Text() = Nothing
         LoadProductos()
+    End Sub
+
+    Private Sub ButtonVerCarrito_Click(sender As Object, e As EventArgs) Handles ButtonVerCarrito.Click
+        Dim carrito As New FormCarrito(venta, listaCarrito)
+        If carrito.ShowDialog() = DialogResult.OK Then
+            Main.Show()
+            Me.Close()
+        End If
     End Sub
 End Class

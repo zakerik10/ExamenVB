@@ -89,4 +89,27 @@ Public Class VentaItemsService
             End Using
         End Using
     End Sub
+
+    Public Function GetProductName(ventaItems As VentaItems)
+        Dim query As String = "SELECT nombre FROM productos WHERE ID = @ID;"
+        Dim nombreProducto As String = String.Empty
+
+        Using connection As New SqlConnection(connectionString)
+            Using command As New SqlCommand(query, connection)
+                command.Parameters.AddWithValue("@ID", ventaItems.IDProducto)
+
+                Try
+                    connection.Open()
+                    Dim result As Object = command.ExecuteScalar()
+                    If result IsNot Nothing Then
+                        nombreProducto = result.ToString()
+                    End If
+                Catch ex As Exception
+                    MessageBox.Show("Error al cargar los datos: " & ex.Message)
+                End Try
+            End Using
+        End Using
+        Return nombreProducto
+    End Function
+
 End Class

@@ -14,3 +14,4 @@ C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.Main.res
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormGestionCliente.resources
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormProductos.resources
 C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormGestionProducto.resources
+C:\Users\zaker\OneDrive\Escritorio\ExamenVB\ExamenVB\obj\Debug\ExamenVB.FormCarrito.resources

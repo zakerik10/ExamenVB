@@ -89,6 +89,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormCarrito.Designer.vb">
+      <DependentUpon>FormCarrito.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormCarrito.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormGestionProducto.Designer.vb">
       <DependentUpon>FormGestionProducto.vb</DependentUpon>
     </Compile>
@@ -142,6 +148,9 @@
     <Compile Include="VentaItems.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FormCarrito.resx">
+      <DependentUpon>FormCarrito.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormClientes.resx">
       <DependentUpon>FormClientes.vb</DependentUpon>
     </EmbeddedResource>

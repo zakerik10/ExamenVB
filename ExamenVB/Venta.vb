@@ -16,6 +16,7 @@ Public Class VentaService
         Dim query As String = "
             INSERT INTO ventas (IDCliente, Fecha, Total) 
             VALUES (@IDCliente, @Fecha, @Total);
+            SELECT SCOPE_IDENTITY();
             "
 
         Using connection As New SqlConnection(connectionString)
@@ -26,7 +27,7 @@ Public Class VentaService
 
                 Try
                     connection.Open()
-                    command.ExecuteNonQuery()
+                    venta.ID = CInt(command.ExecuteScalar())
                     'MessageBox.Show("Producto guardado exitosamente!")
                 Catch ex As Exception
                     MessageBox.Show("Error al cargar los datos: " & ex.Message)
@@ -81,4 +82,26 @@ Public Class VentaService
             End Using
         End Using
     End Sub
+
+    Public Function GetClientName(venta As Venta)
+        Dim query As String = "SELECT cliente FROM clientes WHERE ID = @ID;"
+        Dim nombreProducto As String = String.Empty
+
+        Using connection As New SqlConnection(connectionString)
+            Using command As New SqlCommand(query, connection)
+                command.Parameters.AddWithValue("@ID", venta.IDCliente)
+
+                Try
+                    connection.Open()
+                    Dim result As Object = command.ExecuteScalar()
+                    If result IsNot Nothing Then
+                        nombreProducto = result.ToString()
+                    End If
+                Catch ex As Exception
+                    MessageBox.Show("Error al cargar los datos: " & ex.Message)
+                End Try
+            End Using
+        End Using
+        Return nombreProducto
+    End Function
 End Class

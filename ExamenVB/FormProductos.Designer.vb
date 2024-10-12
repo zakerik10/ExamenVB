@@ -28,6 +28,14 @@ Partial Class FormProductos
         Me.ButtonNext = New System.Windows.Forms.Button()
         Me.ButtonPrevious = New System.Windows.Forms.Button()
         Me.GridClientes = New System.Windows.Forms.DataGridView()
+        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Categoria = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Accion = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.SeleccionarEliminar = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Cantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AgregarCarrito = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.ButtonBuscar = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TextBoxBuscador = New System.Windows.Forms.TextBox()
@@ -45,14 +53,6 @@ Partial Class FormProductos
         Me.ButtonLimpiarFiltroPrecio = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.ButtonVerCarrito = New System.Windows.Forms.Button()
-        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Categoria = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Accion = New System.Windows.Forms.DataGridViewButtonColumn()
-        Me.SeleccionarEliminar = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.Cantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.AgregarCarrito = New System.Windows.Forms.DataGridViewButtonColumn()
         CType(Me.GridClientes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -111,6 +111,66 @@ Partial Class FormProductos
         Me.GridClientes.Name = "GridClientes"
         Me.GridClientes.Size = New System.Drawing.Size(516, 376)
         Me.GridClientes.TabIndex = 14
+        '
+        'ID
+        '
+        Me.ID.HeaderText = "ID"
+        Me.ID.Name = "ID"
+        Me.ID.ReadOnly = True
+        Me.ID.Visible = False
+        '
+        'Nombre
+        '
+        Me.Nombre.HeaderText = "Nombre"
+        Me.Nombre.Name = "Nombre"
+        Me.Nombre.ReadOnly = True
+        '
+        'Precio
+        '
+        Me.Precio.HeaderText = "Precio"
+        Me.Precio.Name = "Precio"
+        Me.Precio.ReadOnly = True
+        '
+        'Categoria
+        '
+        Me.Categoria.HeaderText = "Categoria"
+        Me.Categoria.Name = "Categoria"
+        Me.Categoria.ReadOnly = True
+        '
+        'Accion
+        '
+        Me.Accion.HeaderText = "Acción"
+        Me.Accion.Name = "Accion"
+        Me.Accion.ReadOnly = True
+        Me.Accion.Text = "Editar o Eliminar"
+        Me.Accion.ToolTipText = "Editar o Eliminar"
+        Me.Accion.UseColumnTextForButtonValue = True
+        '
+        'SeleccionarEliminar
+        '
+        Me.SeleccionarEliminar.HeaderText = "Seleccionar"
+        Me.SeleccionarEliminar.Name = "SeleccionarEliminar"
+        Me.SeleccionarEliminar.ReadOnly = True
+        Me.SeleccionarEliminar.Width = 70
+        '
+        'Cantidad
+        '
+        Me.Cantidad.HeaderText = "Cantidad"
+        Me.Cantidad.Name = "Cantidad"
+        Me.Cantidad.ReadOnly = True
+        Me.Cantidad.Width = 60
+        '
+        'AgregarCarrito
+        '
+        Me.AgregarCarrito.HeaderText = "Agregar al Carrito"
+        Me.AgregarCarrito.Name = "AgregarCarrito"
+        Me.AgregarCarrito.ReadOnly = True
+        Me.AgregarCarrito.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.AgregarCarrito.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.AgregarCarrito.Text = "Agregar"
+        Me.AgregarCarrito.ToolTipText = "Agregar"
+        Me.AgregarCarrito.UseColumnTextForButtonValue = True
+        Me.AgregarCarrito.Width = 80
         '
         'ButtonBuscar
         '
@@ -263,66 +323,6 @@ Partial Class FormProductos
         Me.ButtonVerCarrito.TabIndex = 35
         Me.ButtonVerCarrito.Text = "Ver Carrito"
         Me.ButtonVerCarrito.UseVisualStyleBackColor = True
-        '
-        'ID
-        '
-        Me.ID.HeaderText = "ID"
-        Me.ID.Name = "ID"
-        Me.ID.ReadOnly = True
-        Me.ID.Visible = False
-        '
-        'Nombre
-        '
-        Me.Nombre.HeaderText = "Nombre"
-        Me.Nombre.Name = "Nombre"
-        Me.Nombre.ReadOnly = True
-        '
-        'Precio
-        '
-        Me.Precio.HeaderText = "Precio"
-        Me.Precio.Name = "Precio"
-        Me.Precio.ReadOnly = True
-        '
-        'Categoria
-        '
-        Me.Categoria.HeaderText = "Categoria"
-        Me.Categoria.Name = "Categoria"
-        Me.Categoria.ReadOnly = True
-        '
-        'Accion
-        '
-        Me.Accion.HeaderText = "Acción"
-        Me.Accion.Name = "Accion"
-        Me.Accion.ReadOnly = True
-        Me.Accion.Text = "Editar o Eliminar"
-        Me.Accion.ToolTipText = "Editar o Eliminar"
-        Me.Accion.UseColumnTextForButtonValue = True
-        '
-        'SeleccionarEliminar
-        '
-        Me.SeleccionarEliminar.HeaderText = "Seleccionar"
-        Me.SeleccionarEliminar.Name = "SeleccionarEliminar"
-        Me.SeleccionarEliminar.ReadOnly = True
-        Me.SeleccionarEliminar.Width = 70
-        '
-        'Cantidad
-        '
-        Me.Cantidad.HeaderText = "Cantidad"
-        Me.Cantidad.Name = "Cantidad"
-        Me.Cantidad.ReadOnly = True
-        Me.Cantidad.Width = 60
-        '
-        'AgregarCarrito
-        '
-        Me.AgregarCarrito.HeaderText = "Agregar al Carrito"
-        Me.AgregarCarrito.Name = "AgregarCarrito"
-        Me.AgregarCarrito.ReadOnly = True
-        Me.AgregarCarrito.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.AgregarCarrito.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.AgregarCarrito.Text = "Agregar"
-        Me.AgregarCarrito.ToolTipText = "Agregar"
-        Me.AgregarCarrito.UseColumnTextForButtonValue = True
-        Me.AgregarCarrito.Width = 80
         '
         'FormProductos
         '
