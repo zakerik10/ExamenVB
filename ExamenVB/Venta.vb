@@ -1,34 +1,28 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
 
-Public Class Producto
+Public Class Venta
     Public Property ID As Integer
-    Public Property Nombre As String
-    Public Property Precio As Integer
-    Public Property Categoria As String
-
-    Public Sub New(nombre As String, precio As String, categoria As String)
-        Me.Nombre = nombre
-        Me.Precio = precio
-        Me.Categoria = categoria
-    End Sub
+    Public Property IDCliente As Integer
+    Public Property Fecha As DateTime
+    Public Property Total As Integer
 End Class
 
-Public Class ProductoService
+Public Class VentaService
     Private connectionString As String = ConfigurationManager.ConnectionStrings("ExamenConnection").ConnectionString
 
-    Public Sub Guardar(producto As Producto)
+    Public Sub Guardar(venta As Venta)
 
         Dim query As String = "
-            INSERT INTO Productos (Nombre, Precio, Categoria) 
-            VALUES (@Nombre, @Precio, @Categoria);
+            INSERT INTO ventas (IDCliente, Fecha, Total) 
+            VALUES (@IDCliente, @Fecha, @Total);
             "
 
         Using connection As New SqlConnection(connectionString)
             Using command As New SqlCommand(query, connection)
-                command.Parameters.AddWithValue("@Nombre", producto.Nombre)
-                command.Parameters.AddWithValue("@Precio", producto.Precio)
-                command.Parameters.AddWithValue("@Categoria", producto.Categoria)
+                command.Parameters.AddWithValue("@IDCliente", venta.IDCliente)
+                command.Parameters.AddWithValue("@Fecha", venta.Fecha)
+                command.Parameters.AddWithValue("@Total", venta.Total)
 
                 Try
                     connection.Open()
@@ -41,22 +35,22 @@ Public Class ProductoService
         End Using
     End Sub
 
-    Public Sub Editar(producto As Producto)
+    Public Sub Editar(venta As Venta)
 
         Dim query As String = "
-            UPDATE Productos SET 
-            Nombre = @Nombre,
-            Precio = @Precio,
-            Categoria = @Categoria 
+            UPDATE ventas SET 
+            Nombre = @IDCliente,
+            Precio = @Fecha,
+            Categoria = @Total 
             WHERE ID = @ID
             "
 
         Using connection As New SqlConnection(connectionString)
             Using command As New SqlCommand(query, connection)
-                command.Parameters.AddWithValue("@Nombre", producto.Nombre)
-                command.Parameters.AddWithValue("@Precio", producto.Precio)
-                command.Parameters.AddWithValue("@Categoria", producto.Categoria)
-                command.Parameters.AddWithValue("@ID", producto.ID)
+                command.Parameters.AddWithValue("@Nombre", venta.IDCliente)
+                command.Parameters.AddWithValue("@Precio", venta.Fecha)
+                command.Parameters.AddWithValue("@Categoria", venta.Total)
+                command.Parameters.AddWithValue("@ID", venta.ID)
 
                 Try
                     connection.Open()
@@ -69,13 +63,13 @@ Public Class ProductoService
         End Using
     End Sub
 
-    Public Sub Eliminar(producto As Producto)
+    Public Sub Eliminar(venta As Venta)
 
         Dim query As String = "DELETE FROM Productos WHERE ID = @ID;"
 
         Using connection As New SqlConnection(connectionString)
             Using command As New SqlCommand(query, connection)
-                command.Parameters.AddWithValue("@ID", producto.ID)
+                command.Parameters.AddWithValue("@ID", venta.ID)
 
                 Try
                     connection.Open()

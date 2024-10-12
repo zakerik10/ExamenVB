@@ -24,21 +24,22 @@ Partial Class FormClientes
     Private Sub InitializeComponent()
         Me.ButtonBuscar = New System.Windows.Forms.Button()
         Me.GridClientes = New System.Windows.Forms.DataGridView()
+        Me.ButtonPrevious = New System.Windows.Forms.Button()
+        Me.ButtonNext = New System.Windows.Forms.Button()
+        Me.LabelTitulo = New System.Windows.Forms.Label()
+        Me.BotonCrearCliente = New System.Windows.Forms.Button()
+        Me.ButtonVolver = New System.Windows.Forms.Button()
+        Me.TextBoxBuscador = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.ButtonLimpiar = New System.Windows.Forms.Button()
+        Me.ButtonEliminarSelec = New System.Windows.Forms.Button()
         Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Cliente = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Telefono = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Correo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Accion = New System.Windows.Forms.DataGridViewButtonColumn()
-        Me.Seleccionar = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.ButtonPrevious = New System.Windows.Forms.Button()
-        Me.ButtonNext = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.BotonCrearCliente = New System.Windows.Forms.Button()
-        Me.ButtonMenu = New System.Windows.Forms.Button()
-        Me.TextBoxBuscador = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.ButtonLimpiar = New System.Windows.Forms.Button()
-        Me.ButtonEliminarSelec = New System.Windows.Forms.Button()
+        Me.SeleccionarEliminar = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.SeleccionVender = New System.Windows.Forms.DataGridViewButtonColumn()
         CType(Me.GridClientes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -54,51 +55,14 @@ Partial Class FormClientes
         'GridClientes
         '
         Me.GridClientes.AllowUserToAddRows = False
+        Me.GridClientes.AllowUserToDeleteRows = False
         Me.GridClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.GridClientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ID, Me.Cliente, Me.Telefono, Me.Correo, Me.Accion, Me.Seleccionar})
+        Me.GridClientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ID, Me.Cliente, Me.Telefono, Me.Correo, Me.Accion, Me.SeleccionarEliminar, Me.SeleccionVender})
         Me.GridClientes.Location = New System.Drawing.Point(29, 95)
         Me.GridClientes.Name = "GridClientes"
+        Me.GridClientes.ReadOnly = True
         Me.GridClientes.Size = New System.Drawing.Size(516, 376)
         Me.GridClientes.TabIndex = 1
-        '
-        'ID
-        '
-        Me.ID.HeaderText = "ID"
-        Me.ID.Name = "ID"
-        Me.ID.ReadOnly = True
-        Me.ID.Visible = False
-        '
-        'Cliente
-        '
-        Me.Cliente.HeaderText = "Cliente"
-        Me.Cliente.Name = "Cliente"
-        Me.Cliente.ReadOnly = True
-        '
-        'Telefono
-        '
-        Me.Telefono.HeaderText = "Telefono"
-        Me.Telefono.Name = "Telefono"
-        Me.Telefono.ReadOnly = True
-        '
-        'Correo
-        '
-        Me.Correo.HeaderText = "Correo"
-        Me.Correo.Name = "Correo"
-        Me.Correo.ReadOnly = True
-        '
-        'Accion
-        '
-        Me.Accion.HeaderText = "Acción"
-        Me.Accion.Name = "Accion"
-        Me.Accion.Text = "Editar o Eliminar"
-        Me.Accion.ToolTipText = "Editar o Eliminar"
-        Me.Accion.UseColumnTextForButtonValue = True
-        '
-        'Seleccionar
-        '
-        Me.Seleccionar.HeaderText = "Seleccionar"
-        Me.Seleccionar.Name = "Seleccionar"
-        Me.Seleccionar.Width = 70
         '
         'ButtonPrevious
         '
@@ -118,14 +82,14 @@ Partial Class FormClientes
         Me.ButtonNext.Text = "Siguiente"
         Me.ButtonNext.UseVisualStyleBackColor = True
         '
-        'Label1
+        'LabelTitulo
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(26, 24)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(44, 13)
-        Me.Label1.TabIndex = 4
-        Me.Label1.Text = "Clientes"
+        Me.LabelTitulo.AutoSize = True
+        Me.LabelTitulo.Location = New System.Drawing.Point(26, 24)
+        Me.LabelTitulo.Name = "LabelTitulo"
+        Me.LabelTitulo.Size = New System.Drawing.Size(44, 13)
+        Me.LabelTitulo.TabIndex = 4
+        Me.LabelTitulo.Text = "Clientes"
         '
         'BotonCrearCliente
         '
@@ -136,14 +100,14 @@ Partial Class FormClientes
         Me.BotonCrearCliente.Text = "Cliente Nuevo"
         Me.BotonCrearCliente.UseVisualStyleBackColor = True
         '
-        'ButtonMenu
+        'ButtonVolver
         '
-        Me.ButtonMenu.Location = New System.Drawing.Point(460, 24)
-        Me.ButtonMenu.Name = "ButtonMenu"
-        Me.ButtonMenu.Size = New System.Drawing.Size(85, 23)
-        Me.ButtonMenu.TabIndex = 12
-        Me.ButtonMenu.Text = "Volver al menu"
-        Me.ButtonMenu.UseVisualStyleBackColor = True
+        Me.ButtonVolver.Location = New System.Drawing.Point(460, 24)
+        Me.ButtonVolver.Name = "ButtonVolver"
+        Me.ButtonVolver.Size = New System.Drawing.Size(85, 23)
+        Me.ButtonVolver.TabIndex = 12
+        Me.ButtonVolver.Text = "Volver al menu"
+        Me.ButtonVolver.UseVisualStyleBackColor = True
         '
         'TextBoxBuscador
         '
@@ -180,6 +144,56 @@ Partial Class FormClientes
         Me.ButtonEliminarSelec.UseVisualStyleBackColor = True
         Me.ButtonEliminarSelec.Visible = False
         '
+        'ID
+        '
+        Me.ID.HeaderText = "ID"
+        Me.ID.Name = "ID"
+        Me.ID.ReadOnly = True
+        Me.ID.Visible = False
+        '
+        'Cliente
+        '
+        Me.Cliente.HeaderText = "Cliente"
+        Me.Cliente.Name = "Cliente"
+        Me.Cliente.ReadOnly = True
+        '
+        'Telefono
+        '
+        Me.Telefono.HeaderText = "Telefono"
+        Me.Telefono.Name = "Telefono"
+        Me.Telefono.ReadOnly = True
+        '
+        'Correo
+        '
+        Me.Correo.HeaderText = "Correo"
+        Me.Correo.Name = "Correo"
+        Me.Correo.ReadOnly = True
+        '
+        'Accion
+        '
+        Me.Accion.HeaderText = "Acción"
+        Me.Accion.Name = "Accion"
+        Me.Accion.ReadOnly = True
+        Me.Accion.Text = "Editar o Eliminar"
+        Me.Accion.ToolTipText = "Editar o Eliminar"
+        Me.Accion.UseColumnTextForButtonValue = True
+        '
+        'SeleccionarEliminar
+        '
+        Me.SeleccionarEliminar.HeaderText = "Seleccionar"
+        Me.SeleccionarEliminar.Name = "SeleccionarEliminar"
+        Me.SeleccionarEliminar.ReadOnly = True
+        Me.SeleccionarEliminar.Width = 70
+        '
+        'SeleccionVender
+        '
+        Me.SeleccionVender.HeaderText = "Seleccionar"
+        Me.SeleccionVender.Name = "SeleccionVender"
+        Me.SeleccionVender.ReadOnly = True
+        Me.SeleccionVender.Text = "Vender"
+        Me.SeleccionVender.ToolTipText = "Vender"
+        Me.SeleccionVender.UseColumnTextForButtonValue = True
+        '
         'FormClientes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -189,9 +203,9 @@ Partial Class FormClientes
         Me.Controls.Add(Me.ButtonLimpiar)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBoxBuscador)
-        Me.Controls.Add(Me.ButtonMenu)
+        Me.Controls.Add(Me.ButtonVolver)
         Me.Controls.Add(Me.BotonCrearCliente)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.LabelTitulo)
         Me.Controls.Add(Me.ButtonNext)
         Me.Controls.Add(Me.ButtonPrevious)
         Me.Controls.Add(Me.GridClientes)
@@ -208,17 +222,18 @@ Partial Class FormClientes
     Friend WithEvents GridClientes As DataGridView
     Friend WithEvents ButtonPrevious As Button
     Friend WithEvents ButtonNext As Button
-    Friend WithEvents Label1 As Label
+    Friend WithEvents LabelTitulo As Label
     Friend WithEvents BotonCrearCliente As Button
-    Friend WithEvents ButtonMenu As Button
+    Friend WithEvents ButtonVolver As Button
     Friend WithEvents TextBoxBuscador As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents ButtonLimpiar As Button
+    Friend WithEvents ButtonEliminarSelec As Button
     Friend WithEvents ID As DataGridViewTextBoxColumn
     Friend WithEvents Cliente As DataGridViewTextBoxColumn
     Friend WithEvents Telefono As DataGridViewTextBoxColumn
     Friend WithEvents Correo As DataGridViewTextBoxColumn
     Friend WithEvents Accion As DataGridViewButtonColumn
-    Friend WithEvents Seleccionar As DataGridViewCheckBoxColumn
-    Friend WithEvents ButtonEliminarSelec As Button
+    Friend WithEvents SeleccionarEliminar As DataGridViewCheckBoxColumn
+    Friend WithEvents SeleccionVender As DataGridViewButtonColumn
 End Class

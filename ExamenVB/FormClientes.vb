@@ -9,6 +9,23 @@ Public Class FormClientes
     Private currentPage As Integer = 1
     Private sizePage As Integer = 20
 
+    Public Sub New(esVenta As Boolean)
+        InitializeComponent()
+        If esVenta Then
+            LabelTitulo.Text = "Vender"
+            BotonCrearCliente.Hide()
+            SeleccionarEliminar.Visible = False
+            Accion.Visible = False
+            SeleccionVender.Visible = True
+        Else
+            LabelTitulo.Text = "Clientes"
+            BotonCrearCliente.Show()
+            SeleccionarEliminar.Visible = True
+            Accion.Visible = True
+            SeleccionVender.Visible = False
+        End If
+    End Sub
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadClientes()
     End Sub
@@ -96,14 +113,38 @@ Public Class FormClientes
         End If
     End Sub
 
+    Private Sub GridClientes_Vender(sender As Object, e As DataGridViewCellEventArgs) Handles GridClientes.CellClick
+        If e.ColumnIndex = GridClientes.Columns("SeleccionVender").Index AndAlso e.RowIndex >= 0 Then
+            Dim fila As DataGridViewRow = GridClientes.Rows(e.RowIndex)
+
+            If fila.Cells("ID").Value IsNot Nothing AndAlso Not IsDBNull(fila.Cells("ID").Value) Then
+                Dim id As Integer = Convert.ToInt32(fila.Cells("ID").Value)
+                Dim nombre As String = If(fila.Cells("Cliente").Value IsNot Nothing, fila.Cells("Cliente").Value.ToString(), String.Empty)
+                Dim telefono As String = If(fila.Cells("Telefono").Value IsNot Nothing, fila.Cells("Telefono").Value.ToString(), String.Empty)
+                Dim correo As String = If(fila.Cells("Correo").Value IsNot Nothing, fila.Cells("Correo").Value.ToString(), String.Empty)
+
+                Dim cliente As New Cliente(nombre, telefono, correo) With {
+                    .ID = id
+                }
+
+                Dim FormProductos As New FormProductos(cliente)
+                FormProductos.Show()
+                Me.Close()
+            Else
+                MessageBox.Show("El ID del cliente no está disponible.")
+            End If
+        End If
+    End Sub
+
     Private Sub GridClientes_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles GridClientes.CellContentClick
-        If e.ColumnIndex = GridClientes.Columns("Seleccionar").Index AndAlso e.RowIndex >= 0 Then
-            Dim checkBoxCell As DataGridViewCheckBoxCell = CType(GridClientes.Rows(e.RowIndex).Cells("Seleccionar"), DataGridViewCheckBoxCell)
+        Dim nombreColumna As String = "SeleccionarEliminar"
+        If e.ColumnIndex = GridClientes.Columns(nombreColumna).Index AndAlso e.RowIndex >= 0 Then
+            Dim checkBoxCell As DataGridViewCheckBoxCell = CType(GridClientes.Rows(e.RowIndex).Cells(nombreColumna), DataGridViewCheckBoxCell)
             checkBoxCell.Value = Not CBool(checkBoxCell.Value)
 
             Dim cantidadSeleccionadas As Integer = 0
             For Each row As DataGridViewRow In GridClientes.Rows
-                If CBool(row.Cells("Seleccionar").Value) Then
+                If CBool(row.Cells(nombreColumna).Value) Then
                     cantidadSeleccionadas += 1
                 End If
             Next
@@ -122,7 +163,7 @@ Public Class FormClientes
         If resultado = DialogResult.Yes Then
 
             For Each fila As DataGridViewRow In GridClientes.Rows
-                Dim checkBoxCell As DataGridViewCheckBoxCell = CType(fila.Cells("Seleccionar"), DataGridViewCheckBoxCell)
+                Dim checkBoxCell As DataGridViewCheckBoxCell = CType(fila.Cells("SeleccionarEliminar"), DataGridViewCheckBoxCell)
 
                 If checkBoxCell IsNot Nothing AndAlso CBool(checkBoxCell.Value) Then
                     Dim id As Integer = Convert.ToInt32(fila.Cells("ID").Value)
@@ -173,7 +214,7 @@ Public Class FormClientes
         LoadClientes()
     End Sub
 
-    Private Sub ButtonMenu_Click(sender As Object, e As EventArgs) Handles ButtonMenu.Click
+    Private Sub ButtonMenu_Click(sender As Object, e As EventArgs) Handles ButtonVolver.Click
         Main.Show()
         Me.Close()
     End Sub

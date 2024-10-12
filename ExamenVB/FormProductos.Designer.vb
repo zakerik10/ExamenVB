@@ -22,18 +22,12 @@ Partial Class FormProductos
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.ButtonMenu = New System.Windows.Forms.Button()
+        Me.ButtonVolver = New System.Windows.Forms.Button()
         Me.BotonCrearProducto = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.LabelTitulo = New System.Windows.Forms.Label()
         Me.ButtonNext = New System.Windows.Forms.Button()
         Me.ButtonPrevious = New System.Windows.Forms.Button()
         Me.GridClientes = New System.Windows.Forms.DataGridView()
-        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Categoria = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Accion = New System.Windows.Forms.DataGridViewButtonColumn()
-        Me.Seleccionar = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.ButtonBuscar = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TextBoxBuscador = New System.Windows.Forms.TextBox()
@@ -50,17 +44,26 @@ Partial Class FormProductos
         Me.TextBoxMaxPrecio = New System.Windows.Forms.TextBox()
         Me.ButtonLimpiarFiltroPrecio = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
+        Me.ButtonVerCarrito = New System.Windows.Forms.Button()
+        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Categoria = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Accion = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.SeleccionarEliminar = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Cantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AgregarCarrito = New System.Windows.Forms.DataGridViewButtonColumn()
         CType(Me.GridClientes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'ButtonMenu
+        'ButtonVolver
         '
-        Me.ButtonMenu.Location = New System.Drawing.Point(668, 24)
-        Me.ButtonMenu.Name = "ButtonMenu"
-        Me.ButtonMenu.Size = New System.Drawing.Size(85, 23)
-        Me.ButtonMenu.TabIndex = 19
-        Me.ButtonMenu.Text = "Volver al menu"
-        Me.ButtonMenu.UseVisualStyleBackColor = True
+        Me.ButtonVolver.Location = New System.Drawing.Point(668, 24)
+        Me.ButtonVolver.Name = "ButtonVolver"
+        Me.ButtonVolver.Size = New System.Drawing.Size(85, 23)
+        Me.ButtonVolver.TabIndex = 19
+        Me.ButtonVolver.Text = "Volver al menu"
+        Me.ButtonVolver.UseVisualStyleBackColor = True
         '
         'BotonCrearProducto
         '
@@ -71,14 +74,14 @@ Partial Class FormProductos
         Me.BotonCrearProducto.Text = "Producto Nuevo"
         Me.BotonCrearProducto.UseVisualStyleBackColor = True
         '
-        'Label1
+        'LabelTitulo
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(26, 24)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(55, 13)
-        Me.Label1.TabIndex = 17
-        Me.Label1.Text = "Productos"
+        Me.LabelTitulo.AutoSize = True
+        Me.LabelTitulo.Location = New System.Drawing.Point(26, 24)
+        Me.LabelTitulo.Name = "LabelTitulo"
+        Me.LabelTitulo.Size = New System.Drawing.Size(55, 13)
+        Me.LabelTitulo.TabIndex = 17
+        Me.LabelTitulo.Text = "Productos"
         '
         'ButtonNext
         '
@@ -103,51 +106,11 @@ Partial Class FormProductos
         Me.GridClientes.AllowUserToAddRows = False
         Me.GridClientes.AllowUserToDeleteRows = False
         Me.GridClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.GridClientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ID, Me.Nombre, Me.Precio, Me.Categoria, Me.Accion, Me.Seleccionar})
+        Me.GridClientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ID, Me.Nombre, Me.Precio, Me.Categoria, Me.Accion, Me.SeleccionarEliminar, Me.Cantidad, Me.AgregarCarrito})
         Me.GridClientes.Location = New System.Drawing.Point(237, 95)
         Me.GridClientes.Name = "GridClientes"
-        Me.GridClientes.ReadOnly = True
         Me.GridClientes.Size = New System.Drawing.Size(516, 376)
         Me.GridClientes.TabIndex = 14
-        '
-        'ID
-        '
-        Me.ID.HeaderText = "ID"
-        Me.ID.Name = "ID"
-        Me.ID.ReadOnly = True
-        Me.ID.Visible = False
-        '
-        'Nombre
-        '
-        Me.Nombre.HeaderText = "Nombre"
-        Me.Nombre.Name = "Nombre"
-        Me.Nombre.ReadOnly = True
-        '
-        'Precio
-        '
-        Me.Precio.HeaderText = "Precio"
-        Me.Precio.Name = "Precio"
-        Me.Precio.ReadOnly = True
-        '
-        'Categoria
-        '
-        Me.Categoria.HeaderText = "Categoria"
-        Me.Categoria.Name = "Categoria"
-        Me.Categoria.ReadOnly = True
-        '
-        'Accion
-        '
-        Me.Accion.HeaderText = "Acción"
-        Me.Accion.Name = "Accion"
-        Me.Accion.Text = "Editar o Eliminar"
-        Me.Accion.ToolTipText = "Editar o Eliminar"
-        Me.Accion.UseColumnTextForButtonValue = True
-        '
-        'Seleccionar
-        '
-        Me.Seleccionar.HeaderText = "Seleccionar"
-        Me.Seleccionar.Name = "Seleccionar"
-        Me.Seleccionar.Width = 70
         '
         'ButtonBuscar
         '
@@ -292,11 +255,81 @@ Partial Class FormProductos
         Me.Button2.Text = "OK"
         Me.Button2.UseVisualStyleBackColor = True
         '
+        'ButtonVerCarrito
+        '
+        Me.ButtonVerCarrito.Location = New System.Drawing.Point(678, 67)
+        Me.ButtonVerCarrito.Name = "ButtonVerCarrito"
+        Me.ButtonVerCarrito.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonVerCarrito.TabIndex = 35
+        Me.ButtonVerCarrito.Text = "Ver Carrito"
+        Me.ButtonVerCarrito.UseVisualStyleBackColor = True
+        '
+        'ID
+        '
+        Me.ID.HeaderText = "ID"
+        Me.ID.Name = "ID"
+        Me.ID.ReadOnly = True
+        Me.ID.Visible = False
+        '
+        'Nombre
+        '
+        Me.Nombre.HeaderText = "Nombre"
+        Me.Nombre.Name = "Nombre"
+        Me.Nombre.ReadOnly = True
+        '
+        'Precio
+        '
+        Me.Precio.HeaderText = "Precio"
+        Me.Precio.Name = "Precio"
+        Me.Precio.ReadOnly = True
+        '
+        'Categoria
+        '
+        Me.Categoria.HeaderText = "Categoria"
+        Me.Categoria.Name = "Categoria"
+        Me.Categoria.ReadOnly = True
+        '
+        'Accion
+        '
+        Me.Accion.HeaderText = "Acción"
+        Me.Accion.Name = "Accion"
+        Me.Accion.ReadOnly = True
+        Me.Accion.Text = "Editar o Eliminar"
+        Me.Accion.ToolTipText = "Editar o Eliminar"
+        Me.Accion.UseColumnTextForButtonValue = True
+        '
+        'SeleccionarEliminar
+        '
+        Me.SeleccionarEliminar.HeaderText = "Seleccionar"
+        Me.SeleccionarEliminar.Name = "SeleccionarEliminar"
+        Me.SeleccionarEliminar.ReadOnly = True
+        Me.SeleccionarEliminar.Width = 70
+        '
+        'Cantidad
+        '
+        Me.Cantidad.HeaderText = "Cantidad"
+        Me.Cantidad.Name = "Cantidad"
+        Me.Cantidad.ReadOnly = True
+        Me.Cantidad.Width = 60
+        '
+        'AgregarCarrito
+        '
+        Me.AgregarCarrito.HeaderText = "Agregar al Carrito"
+        Me.AgregarCarrito.Name = "AgregarCarrito"
+        Me.AgregarCarrito.ReadOnly = True
+        Me.AgregarCarrito.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.AgregarCarrito.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.AgregarCarrito.Text = "Agregar"
+        Me.AgregarCarrito.ToolTipText = "Agregar"
+        Me.AgregarCarrito.UseColumnTextForButtonValue = True
+        Me.AgregarCarrito.Width = 80
+        '
         'FormProductos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(772, 538)
+        Me.Controls.Add(Me.ButtonVerCarrito)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.ButtonLimpiarFiltroPrecio)
         Me.Controls.Add(Me.TextBoxMaxPrecio)
@@ -312,9 +345,9 @@ Partial Class FormProductos
         Me.Controls.Add(Me.ButtonLimpiar)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBoxBuscador)
-        Me.Controls.Add(Me.ButtonMenu)
+        Me.Controls.Add(Me.ButtonVolver)
         Me.Controls.Add(Me.BotonCrearProducto)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.LabelTitulo)
         Me.Controls.Add(Me.ButtonNext)
         Me.Controls.Add(Me.ButtonPrevious)
         Me.Controls.Add(Me.GridClientes)
@@ -327,9 +360,9 @@ Partial Class FormProductos
 
     End Sub
 
-    Friend WithEvents ButtonMenu As Button
+    Friend WithEvents ButtonVolver As Button
     Friend WithEvents BotonCrearProducto As Button
-    Friend WithEvents Label1 As Label
+    Friend WithEvents LabelTitulo As Label
     Friend WithEvents ButtonNext As Button
     Friend WithEvents ButtonPrevious As Button
     Friend WithEvents GridClientes As DataGridView
@@ -338,12 +371,6 @@ Partial Class FormProductos
     Friend WithEvents TextBoxBuscador As TextBox
     Friend WithEvents ButtonEliminarSelec As Button
     Friend WithEvents ButtonLimpiar As Button
-    Friend WithEvents ID As DataGridViewTextBoxColumn
-    Friend WithEvents Nombre As DataGridViewTextBoxColumn
-    Friend WithEvents Precio As DataGridViewTextBoxColumn
-    Friend WithEvents Categoria As DataGridViewTextBoxColumn
-    Friend WithEvents Accion As DataGridViewButtonColumn
-    Friend WithEvents Seleccionar As DataGridViewCheckBoxColumn
     Friend WithEvents Label3 As Label
     Friend WithEvents ComboBoxCategorias As ComboBox
     Friend WithEvents ButtonLimpiarFiltroCategoria As Button
@@ -355,4 +382,13 @@ Partial Class FormProductos
     Friend WithEvents TextBoxMaxPrecio As TextBox
     Friend WithEvents ButtonLimpiarFiltroPrecio As Button
     Friend WithEvents Button2 As Button
+    Friend WithEvents ButtonVerCarrito As Button
+    Friend WithEvents ID As DataGridViewTextBoxColumn
+    Friend WithEvents Nombre As DataGridViewTextBoxColumn
+    Friend WithEvents Precio As DataGridViewTextBoxColumn
+    Friend WithEvents Categoria As DataGridViewTextBoxColumn
+    Friend WithEvents Accion As DataGridViewButtonColumn
+    Friend WithEvents SeleccionarEliminar As DataGridViewCheckBoxColumn
+    Friend WithEvents Cantidad As DataGridViewTextBoxColumn
+    Friend WithEvents AgregarCarrito As DataGridViewButtonColumn
 End Class

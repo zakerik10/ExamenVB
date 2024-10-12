@@ -7,6 +7,41 @@ Public Class FormProductos
     Private currentPage As Integer = 1
     Private sizePage As Integer = 20
     Private ignoreSelectionChange As Boolean = False
+
+    Private esVenta As Boolean
+    Private cliente As Cliente
+
+    Private listaCarrito As List(Of VentaItems)
+
+    Public Sub New(cliente As Cliente)
+        InitializeComponent()
+        Me.cliente = cliente
+        listaCarrito = New List(Of VentaItems)()
+        If cliente IsNot Nothing Then
+            esVenta = True
+            LabelTitulo.Text = "Seleccionar Productos para " & cliente.Nombre
+            ButtonVolver.Text = "Volver"
+            BotonCrearProducto.Hide()
+            SeleccionarEliminar.Visible = False
+            Accion.Visible = False
+            ButtonVerCarrito.Show()
+            Cantidad.Visible = True
+            Cantidad.ReadOnly = False
+            AgregarCarrito.Visible = True
+        Else
+            esVenta = False
+            LabelTitulo.Text = "Productos"
+            ButtonVolver.Text = "Volver al menu"
+            BotonCrearProducto.Show()
+            SeleccionarEliminar.Visible = True
+            Accion.Visible = True
+            ButtonVerCarrito.Hide()
+            Cantidad.Visible = False
+            AgregarCarrito.Visible = False
+
+
+        End If
+    End Sub
     Private Sub FormLoad(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadProductos()
     End Sub
@@ -148,13 +183,14 @@ Public Class FormProductos
     End Sub
 
     Private Sub GridClientes_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles GridClientes.CellContentClick
-        If e.ColumnIndex = GridClientes.Columns("Seleccionar").Index AndAlso e.RowIndex >= 0 Then
-            Dim checkBoxCell As DataGridViewCheckBoxCell = CType(GridClientes.Rows(e.RowIndex).Cells("Seleccionar"), DataGridViewCheckBoxCell)
+        Dim nombreColumna As String = "SeleccionarEliminar"
+        If e.ColumnIndex = GridClientes.Columns(nombreColumna).Index AndAlso e.RowIndex >= 0 Then
+            Dim checkBoxCell As DataGridViewCheckBoxCell = CType(GridClientes.Rows(e.RowIndex).Cells(nombreColumna), DataGridViewCheckBoxCell)
             checkBoxCell.Value = Not CBool(checkBoxCell.Value)
 
             Dim cantidadSeleccionadas As Integer = 0
             For Each row As DataGridViewRow In GridClientes.Rows
-                If CBool(row.Cells("Seleccionar").Value) Then
+                If CBool(row.Cells(nombreColumna).Value) Then
                     cantidadSeleccionadas += 1
                 End If
             Next
@@ -167,13 +203,58 @@ Public Class FormProductos
         End If
     End Sub
 
+    Private Sub GridClientes_CellClickCarrito(sender As Object, grid As DataGridViewCellEventArgs) Handles GridClientes.CellClick
+        If grid.ColumnIndex = GridClientes.Columns("AgregarCarrito").Index AndAlso grid.RowIndex >= 0 Then
+            Dim fila As DataGridViewRow = GridClientes.Rows(grid.RowIndex)
+
+            If fila.Cells("ID").Value IsNot Nothing AndAlso Not IsDBNull(fila.Cells("ID").Value) Then
+                Dim idProducto As Integer = CInt(fila.Cells("ID").Value)
+                Dim nombreProducto As String = If(fila.Cells("Nombre").Value IsNot Nothing, fila.Cells("Nombre").Value.ToString(), String.Empty)
+                Dim cantidadProducto As Integer = If(fila.Cells("Cantidad").Value IsNot Nothing, CInt(fila.Cells("Cantidad").Value), 0)
+                Dim precioProducto As Integer = If(fila.Cells("Precio").Value IsNot Nothing, CInt(fila.Cells("Precio").Value), 0)
+
+                If cantidadProducto > 0 Then
+                    Dim ventaItems As New VentaItems() With {
+                        .IDProducto = idProducto,
+                        .PrecioUnitario = precioProducto,
+                        .Cantidad = cantidadProducto
+                    }
+
+                    listaCarrito.Add(ventaItems)
+                    MessageBox.Show("Se agregaron al carrito" & vbCrLf & "Producto: " & nombreProducto & vbCrLf & "Cantidad: " & cantidadProducto)
+                    fila.Cells("Cantidad").Value = Nothing
+                Else
+                    MessageBox.Show("Elija una cantida válida")
+                End If
+
+            Else
+                MessageBox.Show("El ID del producto no está disponible.")
+            End If
+        End If
+    End Sub
+
+    Private Sub DataGridView1_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs) Handles GridClientes.EditingControlShowing
+        If GridClientes.CurrentCell.ColumnIndex = GridClientes.Columns("Cantidad").Index Then
+            Dim textBox As TextBox = CType(e.Control, TextBox)
+            RemoveHandler textBox.KeyPress, AddressOf TextBox_KeyPress
+            AddHandler textBox.KeyPress, AddressOf TextBox_KeyPress
+        End If
+    End Sub
+
+    Private Sub TextBox_KeyPress(sender As Object, e As KeyPressEventArgs)
+        ' Permitir solo dígitos y el control de retroceso
+        If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) Then
+            e.Handled = True ' Evitar la entrada
+        End If
+    End Sub
+
     Private Sub ButtonEliminarSelec_Click(sender As Object, e As EventArgs) Handles ButtonEliminarSelec.Click
         Dim resultado As DialogResult = MessageBox.Show("¿Estás seguro de que deseas eliminar los productos seleccionados?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
         If resultado = DialogResult.Yes Then
 
             For Each fila As DataGridViewRow In GridClientes.Rows
-                Dim checkBoxCell As DataGridViewCheckBoxCell = CType(fila.Cells("Seleccionar"), DataGridViewCheckBoxCell)
+                Dim checkBoxCell As DataGridViewCheckBoxCell = CType(fila.Cells("SeleccionarEliminar"), DataGridViewCheckBoxCell)
 
                 If checkBoxCell IsNot Nothing AndAlso CBool(checkBoxCell.Value) Then
                     Dim id As Integer = CInt(fila.Cells("ID").Value)
@@ -227,9 +308,15 @@ Public Class FormProductos
         End If
     End Sub
 
-    Private Sub ButtonMenu_Click(sender As Object, e As EventArgs) Handles ButtonMenu.Click
-        Main.Show()
-        Me.Close()
+    Private Sub ButtonMenu_Click(sender As Object, e As EventArgs) Handles ButtonVolver.Click
+        If esVenta Then
+            Dim FormClientes As New FormClientes(True)
+            FormClientes.Show()
+            Me.Close()
+        Else
+            Main.Show()
+            Me.Close()
+        End If
     End Sub
 
     Private Sub GestionarCliente(sender As Object, e As EventArgs) Handles BotonCrearProducto.Click
@@ -239,7 +326,10 @@ Public Class FormProductos
     End Sub
 
     Private Sub ButtonLimpiar_Click(sender As Object, e As EventArgs) Handles ButtonLimpiar.Click
+        ComboBoxCategorias.SelectedIndex = -1
         TextBoxBuscador.Text = Nothing
+        TextBoxMaxPrecio.Text() = Nothing
+        TextBoxMinPrecio.Text() = Nothing
         LoadProductos()
     End Sub
 
