@@ -3,6 +3,7 @@ Imports System.Runtime.Remoting
 
 Public Class FormProductos
     Dim productoService As New ProductoService()
+    Dim ventaService As New VentaService()
 
     Private currentPage As Integer = 1
     Private sizePage As Integer = 20
@@ -12,25 +13,49 @@ Public Class FormProductos
     Private cliente As Cliente
     Dim venta As New Venta()
 
+
     Private listaCarrito As List(Of VentaItems)
 
-    Public Sub New(cliente As Cliente)
+    Private idVenta As Nullable(Of Integer) = Nothing
+
+    Public Sub New(cliente As Cliente, idVenta As Nullable(Of Integer))
+        ' Si me llega un cliente, es para seleccionar productos que quiere comprar
+        ' Si me llega un cliente y un id de venta, es para ver los productos que compro el cliente
+        ' Si no me llega ningun cliente, es para ver todos los productos que hay, crear, editar o eliminar
         InitializeComponent()
         Me.cliente = cliente
         listaCarrito = New List(Of VentaItems)()
+        Subtotal.Visible = True
         If cliente IsNot Nothing Then
-            esVenta = True
-            LabelTitulo.Text = "Seleccionar Productos para " & cliente.Nombre
-            ButtonVolver.Text = "Volver"
-            BotonCrearProducto.Hide()
-            SeleccionarEliminar.Visible = False
-            Accion.Visible = False
-            ButtonVerCarrito.Show()
-            Cantidad.Visible = True
-            Cantidad.ReadOnly = False
-            AgregarCarrito.Visible = True
+            If idVenta Is Nothing Then
+                esVenta = True
+                LabelTitulo.Text = "Seleccionar Productos para " & cliente.Nombre
+                ButtonVolver.Text = "Volver"
+                BotonCrearProducto.Hide()
+                SeleccionarEliminar.Visible = False
+                Accion.Visible = False
+                ButtonVerCarrito.Show()
+                Cantidad.Visible = True
+                Cantidad.ReadOnly = False
+                AgregarCarrito.Visible = True
 
-            venta.IDCliente = cliente.ID
+                venta.IDCliente = cliente.ID
+                Subtotal.Visible = True
+
+            Else
+                Me.idVenta = idVenta
+                ButtonVolver.Text = "Salir"
+                ButtonVolver.Visible = True
+                LabelTitulo.Text = "Productos que comrpó " & cliente.Nombre
+                BotonCrearProducto.Hide()
+                SeleccionarEliminar.Visible = False
+                Accion.Visible = False
+                ButtonVerCarrito.Hide()
+                Cantidad.Visible = True
+                Cantidad.ReadOnly = True
+                AgregarCarrito.Visible = False
+            End If
+
         Else
             esVenta = False
             LabelTitulo.Text = "Productos"
@@ -81,11 +106,24 @@ Public Class FormProductos
             precioMax = Nothing
         End If
 
-        Dim dataTable As DataTable = productoService.GetProductos(currentPage, sizePage, buscador, categoria, precioMin, precioMax)
+        Dim dataTable As DataTable = productoService.GetProductos(currentPage, sizePage, buscador, categoria, precioMin, precioMax, idVenta)
 
         For Each row As DataRow In dataTable.Rows
-            GridClientes.Rows.Add(CInt(row("ID")), row("Nombre").ToString(), row("Precio").ToString(), row("Categoria").ToString())
+            Dim idProducto As Integer = CInt(row("IDProducto"))
+            Dim nombreProducto As String = row("NombreProducto").ToString()
+            Dim precioProducto As String = row("PrecioProducto").ToString()
+            Dim categoriaProducto As String = row("CategoriaProducto").ToString()
+            Dim cantidad As String
+            If row.Table.Columns.Contains("Cantidad") AndAlso Not IsDBNull(row("Cantidad")) Then
+                cantidad = row("Cantidad").ToString()
+            Else
+                cantidad = "0" ' O cualquier valor predeterminado que quieras usar
+            End If
+            GridClientes.Rows.Add(idProducto, nombreProducto, categoriaProducto, cantidad, precioProducto, precioProducto * cantidad)
         Next
+        If idVenta IsNot Nothing Then
+            GridClientes.Rows.Add("", "", "", "", "", ventaService.GetTotalVentas(idVenta))
+        End If
     End Sub
 
     Private Sub GridClientes_CellClick(sender As Object, grid As DataGridViewCellEventArgs) Handles GridClientes.CellClick
@@ -250,7 +288,9 @@ Public Class FormProductos
             FormClientes.Show()
             Me.Close()
         Else
-            Main.Show()
+            If idVenta Is Nothing Then
+                Main.Show()
+            End If
             Me.Close()
         End If
     End Sub
@@ -301,7 +341,6 @@ Public Class FormProductos
         Dim carrito As New FormCarrito(venta, listaCarrito)
         If carrito.ShowDialog() = DialogResult.OK Then
             Main.Show()
-            Me.Close()
         End If
     End Sub
 End Class

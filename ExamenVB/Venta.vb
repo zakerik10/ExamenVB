@@ -64,15 +64,16 @@ Public Class VentaService
         End Using
     End Sub
 
-    Public Sub Eliminar(venta As Venta)
+    Public Sub Eliminar(idVenta As Integer)
 
-        Dim query As String = "DELETE FROM Productos WHERE ID = @ID;"
+        Dim query As String = "DELETE FROM Ventas WHERE ID = @ID;"
 
         Using connection As New SqlConnection(connectionString)
             Using command As New SqlCommand(query, connection)
-                command.Parameters.AddWithValue("@ID", venta.ID)
+                command.Parameters.AddWithValue("@ID", idVenta)
 
                 Try
+                    Me.EliminarVentasItem(idVenta) ' COMO NO TENGO ELIMINACION POR CASCADA EN LA BASE DE DATOS, ELIMINO LOS ventasitem DE LA VENTA ANTES DE ELIMINAR venta
                     connection.Open()
                     command.ExecuteNonQuery()
                     'MessageBox.Show("Producto eliminado exitosamente!")
@@ -111,7 +112,7 @@ Public Class VentaService
 
         Dim query As String = "
         WITH CTE AS (
-            SELECT ventas.ID, clientes.Cliente, ventas.Fecha, ventas.Total, 
+            SELECT ventas.ID AS VentaID, clientes.Cliente, ventas.Fecha, ventas.Total, clientes.ID AS ClienteID, 
                    ROW_NUMBER() OVER (ORDER BY ventas.ID) AS RowNum
             FROM ventas
             JOIN Clientes
@@ -121,7 +122,7 @@ Public Class VentaService
 
         query &= "
         )
-        SELECT ID, Cliente, Fecha, Total
+        SELECT VentaID, Cliente, Fecha, Total, ClienteID
         FROM CTE
         WHERE RowNum BETWEEN @Inicio AND @Fin
         "
@@ -142,5 +143,47 @@ Public Class VentaService
             End Using
         End Using
         Return dataTable
+    End Function
+
+    Private Sub EliminarVentasItem(idVenta As Integer)
+        Dim query As String = "
+        DELETE FROM ventasitems
+        WHERE IDVenta
+        IN (SELECT ID FROM ventas WHERE ID = @IdVenta);
+        "
+
+        Using connection As New SqlConnection(connectionString)
+            Using command As New SqlCommand(query, connection)
+                command.Parameters.AddWithValue("@IdVenta", idVenta)
+                Try
+                    connection.Open()
+                    command.ExecuteNonQuery()
+                Catch ex As Exception
+                    MessageBox.Show("Error al cargar los datos: " & ex.Message)
+                End Try
+            End Using
+        End Using
+    End Sub
+
+    Public Function GetTotalVentas(idVenta As Integer)
+        Dim query As String = "SELECT Total FROM ventas WHERE ID = @ID;"
+        Dim nombreProducto As String = String.Empty
+
+        Using connection As New SqlConnection(connectionString)
+            Using command As New SqlCommand(query, connection)
+                command.Parameters.AddWithValue("@ID", idVenta)
+
+                Try
+                    connection.Open()
+                    Dim result As Object = command.ExecuteScalar()
+                    If result IsNot Nothing Then
+                        nombreProducto = result.ToString()
+                    End If
+                Catch ex As Exception
+                    MessageBox.Show("Error al cargar los datos: " & ex.Message)
+                End Try
+            End Using
+        End Using
+        Return nombreProducto
     End Function
 End Class

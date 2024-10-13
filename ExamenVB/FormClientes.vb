@@ -50,10 +50,12 @@ Public Class FormClientes
                 Dim telefono As String = If(fila.Cells("Telefono").Value IsNot Nothing, fila.Cells("Telefono").Value.ToString(), String.Empty)
                 Dim correo As String = If(fila.Cells("Correo").Value IsNot Nothing, fila.Cells("Correo").Value.ToString(), String.Empty)
 
-                Dim cliente As New Cliente(nombre, telefono, correo) With {
-                    .ID = id
+                Dim cliente As New Cliente() With {
+                    .ID = id,
+                    .Nombre = nombre,
+                    .Telefono = telefono,
+                    .Correo = correo
                 }
-
                 Dim formEditar As New FormGestionCliente(cliente)
                 If formEditar.ShowDialog() = DialogResult.OK Then
                     LoadClientes()
@@ -74,11 +76,14 @@ Public Class FormClientes
                 Dim telefono As String = If(fila.Cells("Telefono").Value IsNot Nothing, fila.Cells("Telefono").Value.ToString(), String.Empty)
                 Dim correo As String = If(fila.Cells("Correo").Value IsNot Nothing, fila.Cells("Correo").Value.ToString(), String.Empty)
 
-                Dim cliente As New Cliente(nombre, telefono, correo) With {
-                    .ID = id
+                Dim cliente As New Cliente() With {
+                    .ID = id,
+                    .Nombre = nombre,
+                    .Telefono = telefono,
+                    .Correo = correo
                 }
 
-                Dim FormProductos As New FormProductos(cliente)
+                Dim FormProductos As New FormProductos(cliente, Nothing)
                 FormProductos.Show()
                 Me.Close()
             Else
@@ -122,8 +127,11 @@ Public Class FormClientes
                     Dim telefono As String = If(fila.Cells("Telefono").Value IsNot Nothing, fila.Cells("Telefono").Value.ToString(), String.Empty)
                     Dim correo As String = If(fila.Cells("Correo").Value IsNot Nothing, fila.Cells("Correo").Value.ToString(), String.Empty)
 
-                    Dim cliente As New Cliente(nombre, telefono, correo) With {
-                        .ID = id
+                    Dim cliente As New Cliente() With {
+                        .ID = id,
+                        .Nombre = nombre,
+                        .Telefono = telefono,
+                        .Correo = correo
                     }
 
                     clienteService.Eliminar(cliente)

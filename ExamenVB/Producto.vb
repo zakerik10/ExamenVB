@@ -88,7 +88,7 @@ Public Class ProductoService
         End Using
     End Sub
 
-    Public Function GetProductos(currentPage As Integer, sizePage As Integer, filtroBuscador As String, categoria As String, filtroPrecioMin As Nullable(Of Integer), filtroPrecioMax As Nullable(Of Integer))
+    Public Function GetProductos(currentPage As Integer, sizePage As Integer, filtroBuscador As String, categoria As String, filtroPrecioMin As Nullable(Of Integer), filtroPrecioMax As Nullable(Of Integer), idVenta As Nullable(Of Integer))
         Dim inicio As Integer = (currentPage - 1) * sizePage + 1
         Dim fin As Integer = currentPage * sizePage
 
@@ -97,17 +97,33 @@ Public Class ProductoService
 
         Dim query As String = "
         WITH CTE AS (
-            SELECT *, 
-                   ROW_NUMBER() OVER (ORDER BY ID) AS RowNum
+            SELECT productos.ID AS IDProducto,
+               productos.Nombre AS NombreProducto,
+               productos.precio AS PrecioProducto,
+               productos.categoria AS CategoriaProducto,
+        "
+
+        If idVenta IsNot Nothing Then
+            query &= "
+            ventasitems.cantidad AS Cantidad,
+            ROW_NUMBER() OVER (ORDER BY productos.ID) AS RowNum
+            FROM ventasitems
+            JOIN productos ON ventasitems.IDProducto = productos.ID
+            WHERE ventasitems.IDVenta = @IDVenta
+            "
+        Else
+            query &= "
+            ROW_NUMBER() OVER (ORDER BY productos.ID) AS RowNum
             FROM productos
             WHERE 1 = 1
-        "
+            "
+        End If
 
         If Not String.IsNullOrEmpty(filtroBuscador) Then
             query &= " AND Nombre LIKE @NombreFiltro"
         End If
 
-        If categoria IsNot Nothing Then
+        If Not String.IsNullOrEmpty(categoria) Then
             query &= " AND Categoria = @Categoria"
         End If
 
@@ -123,7 +139,7 @@ Public Class ProductoService
 
         query &= "
         )
-        SELECT ID, Nombre, Precio, Categoria
+        SELECT *
         FROM CTE
         WHERE RowNum BETWEEN @Inicio AND @Fin;
         "
@@ -132,11 +148,14 @@ Public Class ProductoService
 
         Using connection As New SqlConnection(connectionString)
             Using command As New SqlCommand(query, connection)
+                command.Parameters.AddWithValue("@Inicio", inicio)
+                command.Parameters.AddWithValue("@Fin", fin)
+
                 If Not String.IsNullOrEmpty(filtroBuscador) Then
-                    command.Parameters.AddWithValue("@Nombre", "%" & filtroBuscador & "%")
+                    command.Parameters.AddWithValue("@NombreFiltro", "%" & filtroBuscador & "%")
                 End If
 
-                If categoria IsNot Nothing Then
+                If Not String.IsNullOrEmpty(categoria) Then
                     command.Parameters.AddWithValue("@Categoria", categoria)
                 End If
 
@@ -144,11 +163,11 @@ Public Class ProductoService
                     command.Parameters.AddWithValue("@PrecioMin", precioMin)
                     command.Parameters.AddWithValue("@PrecioMax", precioMax)
                 End If
-                command.Parameters.AddWithValue("@Inicio", inicio)
-                command.Parameters.AddWithValue("@Fin", fin)
-                If Not String.IsNullOrEmpty(filtroBuscador) Then
-                    command.Parameters.AddWithValue("@NombreFiltro", "%" & filtroBuscador & "%")
+
+                If idVenta IsNot Nothing Then
+                    command.Parameters.AddWithValue("@IDVenta", idVenta)
                 End If
+
                 Try
                     connection.Open()
                     Using adapter As New SqlDataAdapter(command)

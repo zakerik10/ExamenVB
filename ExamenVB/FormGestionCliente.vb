@@ -46,7 +46,11 @@ Public Class FormGestionCliente
             Dim correo As String = TextBoxCorreo.Text
 
             If (cliente Is Nothing) Then
-                cliente = New Cliente(nombre, telefono, correo)
+                cliente = New Cliente() With {
+                    .Nombre = nombre,
+                    .Telefono = telefono,
+                    .Correo = correo
+                }
             Else
                 cliente.Nombre = nombre
                 cliente.Telefono = telefono

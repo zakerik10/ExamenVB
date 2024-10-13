@@ -6,7 +6,7 @@
     End Sub
 
     Private Sub ButtonProductos_Click(sender As Object, e As EventArgs) Handles ButtonProductos.Click
-        Dim FormProductos As New FormProductos(Nothing)
+        Dim FormProductos As New FormProductos(Nothing, Nothing)
         FormProductos.Show()
         Me.Hide()
     End Sub
