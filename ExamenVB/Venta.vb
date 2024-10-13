@@ -116,6 +116,7 @@ Public Class VentaService
             FROM ventas
             JOIN Clientes
             ON ventas.IDCliente = clientes.ID
+            WHERE 1 = 1
         "
 
         query &= "

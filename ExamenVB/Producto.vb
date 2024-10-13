@@ -87,4 +87,99 @@ Public Class ProductoService
             End Using
         End Using
     End Sub
+
+    Public Function GetProductos(currentPage As Integer, sizePage As Integer, filtroBuscador As String, categoria As String, filtroPrecioMin As Nullable(Of Integer), filtroPrecioMax As Nullable(Of Integer))
+        Dim inicio As Integer = (currentPage - 1) * sizePage + 1
+        Dim fin As Integer = currentPage * sizePage
+
+        Dim precioMin As Integer = 0
+        Dim precioMax As Integer = 99999999
+
+        Dim query As String = "
+        WITH CTE AS (
+            SELECT *, 
+                   ROW_NUMBER() OVER (ORDER BY ID) AS RowNum
+            FROM productos
+            WHERE 1 = 1
+        "
+
+        If Not String.IsNullOrEmpty(filtroBuscador) Then
+            query &= " AND Nombre LIKE @NombreFiltro"
+        End If
+
+        If categoria IsNot Nothing Then
+            query &= " AND Categoria = @Categoria"
+        End If
+
+        If filtroPrecioMin IsNot Nothing Or filtroPrecioMax IsNot Nothing Then
+            If filtroPrecioMin IsNot Nothing Then
+                precioMin = filtroPrecioMin
+            End If
+            If filtroPrecioMax IsNot Nothing Then
+                precioMax = filtroPrecioMax
+            End If
+            query &= " AND precio BETWEEN @PrecioMin AND @PrecioMax"
+        End If
+
+        query &= "
+        )
+        SELECT ID, Nombre, Precio, Categoria
+        FROM CTE
+        WHERE RowNum BETWEEN @Inicio AND @Fin;
+        "
+
+        Dim dataTable As New DataTable()
+
+        Using connection As New SqlConnection(connectionString)
+            Using command As New SqlCommand(query, connection)
+                If Not String.IsNullOrEmpty(filtroBuscador) Then
+                    command.Parameters.AddWithValue("@Nombre", "%" & filtroBuscador & "%")
+                End If
+
+                If categoria IsNot Nothing Then
+                    command.Parameters.AddWithValue("@Categoria", categoria)
+                End If
+
+                If filtroPrecioMin IsNot Nothing Or filtroPrecioMax IsNot Nothing Then
+                    command.Parameters.AddWithValue("@PrecioMin", precioMin)
+                    command.Parameters.AddWithValue("@PrecioMax", precioMax)
+                End If
+                command.Parameters.AddWithValue("@Inicio", inicio)
+                command.Parameters.AddWithValue("@Fin", fin)
+                If Not String.IsNullOrEmpty(filtroBuscador) Then
+                    command.Parameters.AddWithValue("@NombreFiltro", "%" & filtroBuscador & "%")
+                End If
+                Try
+                    connection.Open()
+                    Using adapter As New SqlDataAdapter(command)
+                        adapter.Fill(dataTable)
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show("Error al cargar los datos: " & ex.Message)
+                End Try
+            End Using
+        End Using
+        Return dataTable
+    End Function
+
+    Public Function GetCategorias()
+
+        Dim query As String = "SELECT DISTINCT Categoria FROM productos"
+
+        Dim dataTable As New DataTable()
+
+        Using connection As New SqlConnection(connectionString)
+            Using command As New SqlCommand(query, connection)
+                Try
+                    connection.Open()
+                    Using adapter As New SqlDataAdapter(command)
+                        adapter.Fill(dataTable)
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show("Error al cargar los datos: " & ex.Message)
+                End Try
+            End Using
+        End Using
+        Return dataTable
+    End Function
 End Class

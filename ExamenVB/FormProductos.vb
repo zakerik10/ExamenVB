@@ -1,5 +1,5 @@
 ﻿Imports System.Configuration
-Imports System.Data.SqlClient
+Imports System.Runtime.Remoting
 
 Public Class FormProductos
     Dim productoService As New ProductoService()
@@ -46,119 +46,46 @@ Public Class FormProductos
         End If
     End Sub
     Private Sub FormLoad(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadCategorias()
         LoadProductos()
     End Sub
 
+    Private Sub LoadCategorias()
+        ComboBoxCategorias.Items.Clear()
+
+        Dim dataTable As DataTable = productoService.GetCategorias()
+
+        For Each row As DataRow In dataTable.Rows
+            ComboBoxCategorias.Items.Add(row("Categoria").ToString())
+        Next
+    End Sub
+
     Private Sub LoadProductos()
-        Dim connectionString As String = ConfigurationManager.ConnectionStrings("ExamenConnection").ConnectionString
-
-        Dim inicio As Integer = (currentPage - 1) * sizePage + 1
-        Dim fin As Integer = currentPage * sizePage
-
-        Dim precioMin As Integer = 0
-        Dim precioMax As Integer = 99999999
-
-        Dim query As String = "
-        WITH CTE AS (
-            SELECT *, 
-                   ROW_NUMBER() OVER (ORDER BY ID) AS RowNum
-            FROM productos
-            WHERE 1 = 1
-        "
-
-        If Not String.IsNullOrEmpty(TextBoxBuscador.Text) Then
-            query &= " AND Nombre LIKE @Nombre"
-        End If
-
-        If ComboBoxCategorias.SelectedIndex <> -1 Then
-            query &= " AND Categoria = @Categoria"
-        End If
-
-        If Not String.IsNullOrEmpty(TextBoxMinPrecio.Text()) Or Not String.IsNullOrEmpty(TextBoxMaxPrecio.Text()) Then
-            If Not String.IsNullOrEmpty(TextBoxMinPrecio.Text()) Then
-                precioMin = CInt(TextBoxMinPrecio.Text())
-            End If
-            If Not String.IsNullOrEmpty(TextBoxMaxPrecio.Text()) Then
-                precioMax = CInt(TextBoxMaxPrecio.Text())
-            End If
-            query &= " AND precio BETWEEN @PrecioMin AND @PrecioMax"
-        End If
-
-        query &= "
-        )
-        SELECT ID, Nombre, Precio, Categoria
-        FROM CTE
-        WHERE RowNum BETWEEN @Inicio AND @Fin;
-        "
-
-        Dim queryCategorias As String = "SELECT DISTINCT Categoria FROM productos"
 
         GridClientes.Rows.Clear()
 
-        Using connection As New SqlConnection(connectionString)
-            Using command As New SqlCommand(query, connection)
-                If Not String.IsNullOrEmpty(TextBoxBuscador.Text) Then
-                    command.Parameters.AddWithValue("@Nombre", "%" & TextBoxBuscador.Text & "%")
-                End If
+        Dim buscador As String = TextBoxBuscador.Text
+        Dim categoria As String = If(ComboBoxCategorias.SelectedItem IsNot Nothing, ComboBoxCategorias.SelectedItem.ToString(), Nothing)
+        Dim precioMin As Nullable(Of Integer)
+        Dim precioMax As Nullable(Of Integer)
 
-                If ComboBoxCategorias.SelectedIndex <> -1 Then
-                    command.Parameters.AddWithValue("@Categoria", ComboBoxCategorias.SelectedItem.ToString())
-                End If
+        If Not String.IsNullOrEmpty(TextBoxMinPrecio.Text) Then
+            precioMin = CInt(TextBoxMinPrecio.Text.ToString())
+        Else
+            precioMin = Nothing
+        End If
 
-                If Not String.IsNullOrEmpty(TextBoxMinPrecio.Text()) Or Not String.IsNullOrEmpty(TextBoxMaxPrecio.Text()) Then
-                    command.Parameters.AddWithValue("@PrecioMin", precioMin)
-                    command.Parameters.AddWithValue("@PrecioMax", precioMax)
-                End If
+        If Not String.IsNullOrEmpty(TextBoxMaxPrecio.Text) Then
+            precioMax = CInt(TextBoxMaxPrecio.Text.ToString())
+        Else
+            precioMax = Nothing
+        End If
 
-                command.Parameters.AddWithValue("@Inicio", inicio)
-                command.Parameters.AddWithValue("@Fin", fin)
+        Dim dataTable As DataTable = productoService.GetProductos(currentPage, sizePage, buscador, categoria, precioMin, precioMax)
 
-                Try
-                    connection.Open()
-                    Dim adapter As New SqlDataAdapter(command)
-                    Dim dataTable As New DataTable()
-
-                    adapter.Fill(dataTable)
-
-                    For Each row As DataRow In dataTable.Rows
-                        Dim producto As New Producto(
-                            row("Nombre").ToString(),
-                            row("Precio").ToString(),
-                            row("Categoria").ToString()
-                        ) With {
-                            .ID = CInt(row("ID"))
-                        }
-                        GridClientes.Rows.Add(producto.ID, producto.Nombre, producto.Precio, producto.Categoria)
-                    Next
-
-                Catch ex As Exception
-                    MessageBox.Show("Error al cargar los datos: " & ex.Message)
-                End Try
-            End Using
-
-            Dim categoriaSeleccionada As String = If(ComboBoxCategorias.SelectedItem IsNot Nothing, ComboBoxCategorias.SelectedItem.ToString(), String.Empty)
-
-            ignoreSelectionChange = True
-
-            Using commandCategoria As New SqlCommand(queryCategorias, connection)
-
-                Try
-                    ComboBoxCategorias.Items.Clear()
-                    Dim command As New SqlCommand(query, connection)
-                    Dim reader As SqlDataReader = commandCategoria.ExecuteReader()
-                    While reader.Read()
-                        ComboBoxCategorias.Items.Add(reader("Categoria").ToString())
-                    End While
-                Catch ex As Exception
-                    MessageBox.Show("Error al cargar las categorias: " & ex.Message)
-                End Try
-            End Using
-
-            If Not String.IsNullOrEmpty(categoriaSeleccionada) Then
-                ComboBoxCategorias.SelectedItem = categoriaSeleccionada
-            End If
-            ignoreSelectionChange = False
-        End Using
+        For Each row As DataRow In dataTable.Rows
+            GridClientes.Rows.Add(CInt(row("ID")), row("Nombre").ToString(), row("Precio").ToString(), row("Categoria").ToString())
+        Next
     End Sub
 
     Private Sub GridClientes_CellClick(sender As Object, grid As DataGridViewCellEventArgs) Handles GridClientes.CellClick
@@ -177,6 +104,7 @@ Public Class FormProductos
 
                 Dim formEditar As New FormGestionProducto(producto)
                 If formEditar.ShowDialog() = DialogResult.OK Then
+                    LoadCategorias()
                     LoadProductos()
                 End If
             Else
@@ -279,13 +207,12 @@ Public Class FormProductos
                 End If
             Next
             ButtonEliminarSelec.Hide()
+            LoadCategorias()
             LoadProductos()
         End If
     End Sub
 
     Private Sub ComboBoxCategorias_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxCategorias.SelectedIndexChanged
-        If ignoreSelectionChange Then Return
-
         LoadProductos()
     End Sub
 
@@ -331,6 +258,7 @@ Public Class FormProductos
     Private Sub GestionarCliente(sender As Object, e As EventArgs) Handles BotonCrearProducto.Click
         Dim formGestion As New FormGestionProducto(Nothing)
         formGestion.ShowDialog()
+        LoadCategorias()
         LoadProductos()
     End Sub
 
@@ -363,7 +291,7 @@ Public Class FormProductos
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ButtonLimpiarFiltroPrecio.Click
+    Private Sub ButtonLimpiarFiltroPrecio_Click(sender As Object, e As EventArgs) Handles ButtonLimpiarFiltroPrecio.Click
         TextBoxMaxPrecio.Text() = Nothing
         TextBoxMinPrecio.Text() = Nothing
         LoadProductos()

@@ -1,6 +1,6 @@
-﻿Imports System.Data.SqlClient
-Imports System.Configuration
+﻿Imports System.Configuration
 Imports System.Drawing.Printing
+Imports System.Runtime.Remoting
 
 Public Class FormClientes
 
@@ -31,62 +31,13 @@ Public Class FormClientes
     End Sub
 
     Private Sub LoadClientes()
-        Dim connectionString As String = ConfigurationManager.ConnectionStrings("ExamenConnection").ConnectionString
-
-        Dim inicio As Integer = (currentPage - 1) * sizePage + 1
-        Dim fin As Integer = currentPage * sizePage
-
-        Dim query As String = "
-        WITH CTE AS (
-            SELECT *, 
-                   ROW_NUMBER() OVER (ORDER BY ID) AS RowNum
-            FROM clientes
-            WHERE 1 = 1
-        "
-
-        If Not String.IsNullOrEmpty(TextBoxBuscador.Text) Then
-            query &= " AND Cliente LIKE @Nombre"
-        End If
-
-        query &= "
-        )
-        SELECT ID, Cliente, Telefono, Correo
-        FROM CTE
-        WHERE RowNum BETWEEN @Inicio AND @Fin
-        "
-
         GridClientes.Rows.Clear()
 
-        Using connection As New SqlConnection(connectionString)
-            Using command As New SqlCommand(query, connection)
-                If Not String.IsNullOrEmpty(TextBoxBuscador.Text) Then
-                    command.Parameters.AddWithValue("@Nombre", "%" & TextBoxBuscador.Text & "%")
-                End If
-                command.Parameters.AddWithValue("@Inicio", inicio)
-                command.Parameters.AddWithValue("@Fin", fin)
+        Dim dataTable As DataTable = clienteService.GetClientes(currentPage, sizePage, TextBoxBuscador.Text)
 
-                Try
-                    connection.Open()
-                    Dim adapter As New SqlDataAdapter(command)
-                    Dim dataTable As New DataTable()
-
-                    adapter.Fill(dataTable)
-
-                    For Each row As DataRow In dataTable.Rows
-                        Dim cliente As New Cliente(
-                            row("Cliente").ToString(),
-                            row("Telefono").ToString(),
-                            row("Correo").ToString()
-                        )
-                        cliente.ID = Convert.ToInt32(row("ID"))
-                        GridClientes.Rows.Add(cliente.ID, cliente.Nombre, cliente.Telefono, cliente.Correo)
-                    Next
-
-                Catch ex As Exception
-                    MessageBox.Show("Error al cargar los datos: " & ex.Message)
-                End Try
-            End Using
-        End Using
+        For Each row As DataRow In dataTable.Rows
+            GridClientes.Rows.Add(CInt(row("ID")), row("Cliente").ToString(), row("Telefono").ToString(), row("Correo").ToString())
+        Next
     End Sub
 
     Private Sub GridClientes_Accion(sender As Object, e As DataGridViewCellEventArgs) Handles GridClientes.CellClick
