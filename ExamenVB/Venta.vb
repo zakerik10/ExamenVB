@@ -104,4 +104,42 @@ Public Class VentaService
         End Using
         Return nombreProducto
     End Function
+
+    Public Function GetVentas(currentPage As Integer, sizePage As Integer)
+        Dim inicio As Integer = (currentPage - 1) * sizePage + 1
+        Dim fin As Integer = currentPage * sizePage
+
+        Dim query As String = "
+        WITH CTE AS (
+            SELECT ventas.ID, clientes.Cliente, ventas.Fecha, ventas.Total, 
+                   ROW_NUMBER() OVER (ORDER BY ventas.ID) AS RowNum
+            FROM ventas
+            JOIN Clientes
+            ON ventas.IDCliente = clientes.ID
+        "
+
+        query &= "
+        )
+        SELECT ID, Cliente, Fecha, Total
+        FROM CTE
+        WHERE RowNum BETWEEN @Inicio AND @Fin
+        "
+        Dim dataTable As New DataTable()
+
+        Using connection As New SqlConnection(connectionString)
+            Using command As New SqlCommand(query, connection)
+                command.Parameters.AddWithValue("@Inicio", inicio)
+                command.Parameters.AddWithValue("@Fin", fin)
+                Try
+                    connection.Open()
+                    Using adapter As New SqlDataAdapter(command)
+                        adapter.Fill(dataTable)
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show("Error al cargar los datos: " & ex.Message)
+                End Try
+            End Using
+        End Using
+        Return dataTable
+    End Function
 End Class

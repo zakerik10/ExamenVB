@@ -20,4 +20,10 @@
         FormClientes.Show()
         Me.Hide()
     End Sub
+
+    Private Sub ButtonVerVentas_Click(sender As Object, e As EventArgs) Handles ButtonVerVentas.Click
+        Dim FormVentas As New FormVentas()
+        FormVentas.Show()
+        Me.Hide()
+    End Sub
 End Class

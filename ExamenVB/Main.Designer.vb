@@ -27,6 +27,7 @@ Partial Class Main
         Me.ButtonProductos = New System.Windows.Forms.Button()
         Me.ButtonSalir = New System.Windows.Forms.Button()
         Me.ButtonVender = New System.Windows.Forms.Button()
+        Me.ButtonVerVentas = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -75,11 +76,21 @@ Partial Class Main
         Me.ButtonVender.Text = "Vender"
         Me.ButtonVender.UseVisualStyleBackColor = True
         '
+        'ButtonVerVentas
+        '
+        Me.ButtonVerVentas.Location = New System.Drawing.Point(129, 245)
+        Me.ButtonVerVentas.Name = "ButtonVerVentas"
+        Me.ButtonVerVentas.Size = New System.Drawing.Size(130, 42)
+        Me.ButtonVerVentas.TabIndex = 5
+        Me.ButtonVerVentas.Text = "Ver ventas"
+        Me.ButtonVerVentas.UseVisualStyleBackColor = True
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(384, 432)
+        Me.Controls.Add(Me.ButtonVerVentas)
         Me.Controls.Add(Me.ButtonVender)
         Me.Controls.Add(Me.ButtonSalir)
         Me.Controls.Add(Me.ButtonProductos)
@@ -97,4 +108,5 @@ Partial Class Main
     Friend WithEvents ButtonProductos As Button
     Friend WithEvents ButtonSalir As Button
     Friend WithEvents ButtonVender As Button
+    Friend WithEvents ButtonVerVentas As Button
 End Class
