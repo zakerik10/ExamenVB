@@ -33,6 +33,10 @@ Partial Class FormVentas
         Me.SeleccionarEliminar = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.IDCliente = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ButtonVolver = New System.Windows.Forms.Button()
+        Me.ButtonLimpiar = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TextBoxBuscador = New System.Windows.Forms.TextBox()
+        Me.ButtonBuscar = New System.Windows.Forms.Button()
         CType(Me.GridVentas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -51,7 +55,7 @@ Partial Class FormVentas
         Me.GridVentas.AllowUserToDeleteRows = False
         Me.GridVentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridVentas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IDVenta, Me.Cliente, Me.Fecha, Me.Total, Me.VerProductos, Me.SeleccionarEliminar, Me.IDCliente})
-        Me.GridVentas.Location = New System.Drawing.Point(41, 87)
+        Me.GridVentas.Location = New System.Drawing.Point(41, 111)
         Me.GridVentas.Name = "GridVentas"
         Me.GridVentas.ReadOnly = True
         Me.GridVentas.Size = New System.Drawing.Size(496, 335)
@@ -59,7 +63,7 @@ Partial Class FormVentas
         '
         'ButtonEliminarSelec
         '
-        Me.ButtonEliminarSelec.Location = New System.Drawing.Point(436, 58)
+        Me.ButtonEliminarSelec.Location = New System.Drawing.Point(436, 82)
         Me.ButtonEliminarSelec.Name = "ButtonEliminarSelec"
         Me.ButtonEliminarSelec.Size = New System.Drawing.Size(101, 23)
         Me.ButtonEliminarSelec.TabIndex = 2
@@ -123,11 +127,49 @@ Partial Class FormVentas
         Me.ButtonVolver.Text = "Volver al menu"
         Me.ButtonVolver.UseVisualStyleBackColor = True
         '
+        'ButtonLimpiar
+        '
+        Me.ButtonLimpiar.Location = New System.Drawing.Point(350, 82)
+        Me.ButtonLimpiar.Name = "ButtonLimpiar"
+        Me.ButtonLimpiar.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonLimpiar.TabIndex = 26
+        Me.ButtonLimpiar.Text = "Limpiar"
+        Me.ButtonLimpiar.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(38, 68)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(40, 13)
+        Me.Label2.TabIndex = 25
+        Me.Label2.Text = "Buscar"
+        '
+        'TextBoxBuscador
+        '
+        Me.TextBoxBuscador.Location = New System.Drawing.Point(41, 84)
+        Me.TextBoxBuscador.Name = "TextBoxBuscador"
+        Me.TextBoxBuscador.Size = New System.Drawing.Size(222, 20)
+        Me.TextBoxBuscador.TabIndex = 24
+        '
+        'ButtonBuscar
+        '
+        Me.ButtonBuscar.Location = New System.Drawing.Point(269, 82)
+        Me.ButtonBuscar.Name = "ButtonBuscar"
+        Me.ButtonBuscar.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonBuscar.TabIndex = 23
+        Me.ButtonBuscar.Text = "Buscar"
+        Me.ButtonBuscar.UseVisualStyleBackColor = True
+        '
         'FormVentas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(570, 453)
+        Me.ClientSize = New System.Drawing.Size(570, 469)
+        Me.Controls.Add(Me.ButtonLimpiar)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.TextBoxBuscador)
+        Me.Controls.Add(Me.ButtonBuscar)
         Me.Controls.Add(Me.ButtonVolver)
         Me.Controls.Add(Me.ButtonEliminarSelec)
         Me.Controls.Add(Me.GridVentas)
@@ -151,4 +193,8 @@ Partial Class FormVentas
     Friend WithEvents SeleccionarEliminar As DataGridViewCheckBoxColumn
     Friend WithEvents IDCliente As DataGridViewTextBoxColumn
     Friend WithEvents ButtonVolver As Button
+    Friend WithEvents ButtonLimpiar As Button
+    Friend WithEvents Label2 As Label
+    Friend WithEvents TextBoxBuscador As TextBox
+    Friend WithEvents ButtonBuscar As Button
 End Class

@@ -106,7 +106,7 @@ Public Class VentaService
         Return nombreProducto
     End Function
 
-    Public Function GetVentas(currentPage As Integer, sizePage As Integer)
+    Public Function GetVentas(currentPage As Integer, sizePage As Integer, filtroBuscador As String)
         Dim inicio As Integer = (currentPage - 1) * sizePage + 1
         Dim fin As Integer = currentPage * sizePage
 
@@ -117,8 +117,12 @@ Public Class VentaService
             FROM ventas
             JOIN Clientes
             ON ventas.IDCliente = clientes.ID
-            WHERE 1 = 1
+            
         "
+
+        If Not String.IsNullOrEmpty(filtroBuscador) Then
+            query &= " AND clientes.Cliente LIKE @NombreFiltro"
+        End If
 
         query &= "
         )
@@ -132,6 +136,9 @@ Public Class VentaService
             Using command As New SqlCommand(query, connection)
                 command.Parameters.AddWithValue("@Inicio", inicio)
                 command.Parameters.AddWithValue("@Fin", fin)
+                If Not String.IsNullOrEmpty(filtroBuscador) Then
+                    command.Parameters.AddWithValue("@NombreFiltro", "%" & filtroBuscador & "%")
+                End If
                 Try
                     connection.Open()
                     Using adapter As New SqlDataAdapter(command)

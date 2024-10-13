@@ -14,9 +14,11 @@ Public Class FormVentas
     End Sub
     Private Sub LoadVentas()
 
+        Dim buscador As String = TextBoxBuscador.Text
+
         GridVentas.Rows.Clear()
 
-        Dim dataTable As DataTable = VService.GetVentas(currentPage, sizePage)
+        Dim dataTable As DataTable = VService.GetVentas(currentPage, sizePage, buscador)
 
         For Each row As DataRow In dataTable.Rows
             GridVentas.Rows.Add(CInt(row("VentaID")), row("Cliente").ToString(), row("Fecha").ToString(), row("Total").ToString(), row("ClienteID").ToString())
@@ -89,5 +91,14 @@ Public Class FormVentas
     Private Sub ButtonVolver_Click(sender As Object, e As EventArgs) Handles ButtonVolver.Click
         Main.Show()
         Me.Close()
+    End Sub
+
+    Private Sub ButtonBuscar_Click(sender As Object, e As EventArgs) Handles ButtonBuscar.Click
+        LoadVentas()
+    End Sub
+
+    Private Sub ButtonLimpiar_Click(sender As Object, e As EventArgs) Handles ButtonLimpiar.Click
+        TextBoxBuscador.Text = Nothing
+        LoadVentas()
     End Sub
 End Class

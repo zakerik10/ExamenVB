@@ -25,7 +25,7 @@ Public Class FormProductos
         InitializeComponent()
         Me.cliente = cliente
         listaCarrito = New List(Of VentaItems)()
-        Subtotal.Visible = True
+        Subtotal.Visible = False
         If cliente IsNot Nothing Then
             If idVenta Is Nothing Then
                 esVenta = True
@@ -40,7 +40,6 @@ Public Class FormProductos
                 AgregarCarrito.Visible = True
 
                 venta.IDCliente = cliente.ID
-                Subtotal.Visible = True
 
             Else
                 Me.idVenta = idVenta
@@ -54,6 +53,7 @@ Public Class FormProductos
                 Cantidad.Visible = True
                 Cantidad.ReadOnly = True
                 AgregarCarrito.Visible = False
+                Subtotal.Visible = True
             End If
 
         Else
@@ -122,7 +122,7 @@ Public Class FormProductos
             GridClientes.Rows.Add(idProducto, nombreProducto, categoriaProducto, cantidad, precioProducto, precioProducto * cantidad)
         Next
         If idVenta IsNot Nothing Then
-            GridClientes.Rows.Add("", "", "", "", "", ventaService.GetTotalVentas(idVenta))
+            GridClientes.Rows.Add("", "", "", "", "Total:", ventaService.GetTotalVentas(idVenta))
         End If
     End Sub
 
@@ -265,9 +265,7 @@ Public Class FormProductos
 
 
     Private Sub LoadClients(sender As Object, e As EventArgs) Handles ButtonBuscar.Click
-        If Not String.IsNullOrEmpty(TextBoxBuscador.Text()) Then
-            LoadProductos()
-        End If
+        LoadProductos()
     End Sub
 
     Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
