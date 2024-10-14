@@ -26,4 +26,10 @@
         FormVentas.Show()
         Me.Hide()
     End Sub
+
+    Private Sub ButtonReporteProductos_Click(sender As Object, e As EventArgs) Handles ButtonReporteProductos.Click
+        Dim FormReportesProductos As New FormReporteProductos()
+        FormReportesProductos.Show()
+        Me.Hide()
+    End Sub
 End Class

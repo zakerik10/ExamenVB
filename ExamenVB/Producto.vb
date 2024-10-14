@@ -201,4 +201,54 @@ Public Class ProductoService
         End Using
         Return dataTable
     End Function
+
+    Public Function GetReporteProductos(currentPage As Integer, sizePage As Integer, filtroBuscador As String, mes As Integer, año As Integer)
+        Dim inicio As Integer = (currentPage - 1) * sizePage + 1
+        Dim fin As Integer = currentPage * sizePage
+        Dim query As String = "
+        WITH CTE AS (
+            SELECT productos.Nombre AS NombreProducto, SUM(ventasitems.Cantidad) AS TotalVendido,
+            ROW_NUMBER() OVER (ORDER BY SUM(ventasitems.Cantidad) DESC) AS RowNum
+            FROM ventasitems
+            JOIN productos ON ventasitems.IDProducto = productos.ID
+            JOIN ventas ON ventasitems.IDVenta = ventas.ID
+            WHERE MONTH(ventas.Fecha) = @Mes AND YEAR(ventas.Fecha) = @Año
+            
+        "
+
+        If Not String.IsNullOrEmpty(filtroBuscador) Then
+            query &= " AND Nombre LIKE @NombreFiltro"
+        End If
+
+        query &= "
+        GROUP BY productos.Nombre
+        )
+        SELECT *
+        FROM CTE
+        WHERE RowNum BETWEEN @Inicio AND @Fin;
+        "
+        Dim dataTable As New DataTable()
+
+        Using connection As New SqlConnection(connectionString)
+            Using command As New SqlCommand(query, connection)
+                command.Parameters.AddWithValue("@Inicio", inicio)
+                command.Parameters.AddWithValue("@Fin", fin)
+                command.Parameters.AddWithValue("@Mes", mes)
+                command.Parameters.AddWithValue("@Año", año)
+
+                If Not String.IsNullOrEmpty(filtroBuscador) Then
+                    command.Parameters.AddWithValue("@NombreFiltro", "%" & filtroBuscador & "%")
+                End If
+                Try
+                    connection.Open()
+                    Using adapter As New SqlDataAdapter(command)
+                        adapter.Fill(dataTable)
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show("Error al cargar los datos: " & ex.Message)
+                End Try
+            End Using
+        End Using
+        Return dataTable
+    End Function
 End Class

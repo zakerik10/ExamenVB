@@ -28,6 +28,7 @@ Partial Class Main
         Me.ButtonSalir = New System.Windows.Forms.Button()
         Me.ButtonVender = New System.Windows.Forms.Button()
         Me.ButtonVerVentas = New System.Windows.Forms.Button()
+        Me.ButtonReporteProductos = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -60,7 +61,7 @@ Partial Class Main
         '
         'ButtonSalir
         '
-        Me.ButtonSalir.Location = New System.Drawing.Point(129, 334)
+        Me.ButtonSalir.Location = New System.Drawing.Point(129, 352)
         Me.ButtonSalir.Name = "ButtonSalir"
         Me.ButtonSalir.Size = New System.Drawing.Size(130, 42)
         Me.ButtonSalir.TabIndex = 3
@@ -85,11 +86,21 @@ Partial Class Main
         Me.ButtonVerVentas.Text = "Ver ventas"
         Me.ButtonVerVentas.UseVisualStyleBackColor = True
         '
+        'ButtonReporteProductos
+        '
+        Me.ButtonReporteProductos.Location = New System.Drawing.Point(129, 293)
+        Me.ButtonReporteProductos.Name = "ButtonReporteProductos"
+        Me.ButtonReporteProductos.Size = New System.Drawing.Size(130, 42)
+        Me.ButtonReporteProductos.TabIndex = 6
+        Me.ButtonReporteProductos.Text = "Reporte de Productos"
+        Me.ButtonReporteProductos.UseVisualStyleBackColor = True
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(384, 432)
+        Me.Controls.Add(Me.ButtonReporteProductos)
         Me.Controls.Add(Me.ButtonVerVentas)
         Me.Controls.Add(Me.ButtonVender)
         Me.Controls.Add(Me.ButtonSalir)
@@ -109,4 +120,5 @@ Partial Class Main
     Friend WithEvents ButtonSalir As Button
     Friend WithEvents ButtonVender As Button
     Friend WithEvents ButtonVerVentas As Button
+    Friend WithEvents ButtonReporteProductos As Button
 End Class
